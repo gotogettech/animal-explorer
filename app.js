@@ -1,4 +1,4 @@
-// Ultimate Animal Explorer JS - Modern Version
+// Ultimate Animal Explorer JS - Kid-Friendly Animated Version
 
 async function loadJSON(path) {
   const res = await fetch(path);
@@ -25,6 +25,7 @@ function numberToWords(num) {
   return String(num);
 }
 
+// Speech synthesis fallback
 function speak(text, lang = 'en-IN') {
   if (!window.speechSynthesis) { alert('Speech not supported'); return; }
   const utt = new SpeechSynthesisUtterance(text);
@@ -83,10 +84,10 @@ function renderAnimalGrid(list) {
   animalGrid.innerHTML = '';
   list.forEach(an => {
     const card = document.createElement('div');
-    card.className = 'animal-card';
+    card.className = 'animal-card bg-gradient-to-br from-yellow-200 via-pink-200 to-blue-200 rounded-xl shadow-lg p-2 transition transform hover:scale-110';
     card.innerHTML = `
-      <img src="${an.image}" alt="${an.name}" class="rounded-xl" />
-      <p class="animal-name">${an.name}</p>
+      <img src="${an.image}" alt="${an.name}" class="rounded-xl w-full h-28 object-cover" />
+      <p class="animal-name text-center font-bold mt-1 text-lg">${an.name}</p>
     `;
     card.addEventListener('click', () => showAnimal(an));
     animalGrid.appendChild(card);
@@ -151,7 +152,7 @@ function renderNumbers(start, end) {
   end = Math.min(1000, end);
   for (let i = start; i <= end; i++) {
     const div = document.createElement('div');
-    div.className = 'number-card';
+    div.className = 'number-card bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 rounded-lg shadow p-4 text-center cursor-pointer transition transform hover:scale-110';
     div.textContent = i;
     div.addEventListener('click', () => speak(numberToWords(i), 'en-IN'));
     numbersGrid.appendChild(div);
@@ -161,15 +162,24 @@ numbersGenerate.addEventListener('click', () => {
   renderNumbers(parseInt(numStart.value, 10), parseInt(numEnd.value, 10));
 });
 
-// Letters
+// Letters with audio
 async function renderLetters(path, gridEl, lang) {
   const letters = await loadJSON(path);
   gridEl.innerHTML = '';
   letters.forEach(l => {
     const div = document.createElement('div');
-    div.className = 'letter-card';
+    div.className = 'letter-card bg-gradient-to-br from-pink-300 via-yellow-200 to-green-200 rounded-xl p-4 text-center text-2xl font-bold shadow cursor-pointer transition transform hover:scale-110';
     div.textContent = l.char;
-    div.addEventListener('click', () => speak(l.char, lang));
+
+    div.addEventListener('click', () => {
+      if (l.sound && l.sound !== 'null') {
+        const audio = new Audio(l.sound);
+        audio.play().catch(err => console.error('Audio play failed:', err));
+      } else {
+        speak(l.char, lang);
+      }
+    });
+
     gridEl.appendChild(div);
   });
 }
@@ -186,6 +196,6 @@ async function init() {
 }
 
 window.addEventListener('load', () => {
-  speechSynthesis.onvoiceschanged = () => { };
+  speechSynthesis.onvoiceschanged = () => {};
   init();
 });
