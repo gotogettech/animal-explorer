@@ -53,12 +53,12 @@
 
     <!-- Numbers Content -->
     <div id="content-numbers" class="hidden">
-      <div class="flex gap-2 mb-4">
-        <input id="num-start" type="number" value="0" class="p-2 border rounded w-20" />
-        <input id="num-end" type="number" value="20" class="p-2 border rounded w-20" />
-        <button id="numbers-generate" class="btn">Generate</button>
+      <div class="number-controls">
+        <input type="number" id="num-start" value="0" min="0" max="1000" />
+        <input type="number" id="num-end" value="20" min="0" max="1000" />
+        <button id="numbers-generate">Show Numbers</button>
       </div>
-      <div id="numbers-grid" class="grid grid-cols-4 md:grid-cols-8 gap-2"></div>
+      <div id="numbers-grid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-10 gap-4 p-4"></div>
     </div>
 
     <!-- Letters Content -->
