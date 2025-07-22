@@ -52,7 +52,6 @@
   { "char": "ష", "name": "ష", "sound": "assets/sounds/telugu/letter_c37.mp3" },
   { "char": "స", "name": "స", "sound": "assets/sounds/telugu/letter_c38.mp3" },
   { "char": "హ", "name": "హ", "sound": "assets/sounds/telugu/letter_c39.mp3" },
-
   { "char": "ళ", "name": "ళ", "sound": "assets/sounds/telugu/letter_c33.mp3" },
   { "char": "క్ష", "name": "క్ష", "sound": "assets/sounds/telugu/letter_c15_c4d_c37.mp3" },
   { "char": "ఱ", "name": "ఱ", "sound": "assets/sounds/telugu/letter_c31.mp3" }
