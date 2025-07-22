@@ -1,80 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Ultimate Animal Explorer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate Animal Explorer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-<header>
-  <h1>Ultimate Animal Explorer</h1>
-</header>
+<body class="bg-gradient-to-r from-blue-200 to-pink-200 min-h-screen">
+  <header class="text-center p-6 bg-white shadow-md">
+    <h1 class="text-4xl font-bold text-blue-700">Ultimate Animal Explorer</h1>
+    <p class="text-gray-600">Learn animals, numbers, and letters with fun sounds!</p>
+  </header>
 
-<nav id="tabs">
-  <button data-tab="animals" class="active">Animals</button>
-  <button data-tab="numbers">Numbers</button>
-  <button data-tab="letters-en">English Letters</button>
-  <button data-tab="letters-te">Telugu Letters</button>
-  <button data-tab="letters-hi">Hindi Letters</button>
-</nav>
+  <nav id="tabs" class="flex justify-center gap-4 p-4 bg-blue-100">
+    <button class="tab-btn active" data-tab="animals">Animals</button>
+    <button class="tab-btn" data-tab="numbers">Numbers</button>
+    <button class="tab-btn" data-tab="letters-en">English Letters</button>
+    <button class="tab-btn" data-tab="letters-te">Telugu Letters</button>
+    <button class="tab-btn" data-tab="letters-hi">Hindi Letters</button>
+  </nav>
 
-<section id="search-section" class="hidden">
-  <input type="text" id="search-input" placeholder="Search..." />
-</section>
-
-<main>
-  <div id="content-animals" class="tab-content active">
-    <div id="animal-category-filters">
-      <button data-cat="All" class="cat-button active">All</button>
-      <button data-cat="Mammal" class="cat-button">Mammals</button>
-      <button data-cat="Bird" class="cat-button">Birds</button>
-      <button data-cat="Reptile" class="cat-button">Reptiles</button>
-      <button data-cat="Amphibian" class="cat-button">Amphibians</button>
-      <button data-cat="Aquatic" class="cat-button">Aquatic</button>
+  <main class="p-6">
+    <!-- Search bar -->
+    <div id="search-section" class="mb-4">
+      <input type="text" id="search-input" placeholder="Search animals..."
+        class="p-2 border border-gray-400 rounded w-full" />
     </div>
-    <div id="animal-grid" class="grid"></div>
-    <div id="animal-detail" class="detail hidden">
-      <button id="animal-back">← Back</button>
-      <img id="animal-img" alt="">
-      <h2 id="animal-name"></h2>
-      <p id="animal-fact"></p>
-      <div class="buttons">
-        <button id="animal-sound-btn">🔊 Animal Sound</button>
-        <button id="animal-speak-btn">🗣️ Narrate</button>
+
+    <!-- Animal Content -->
+    <div id="content-animals" class="active">
+      <div id="animal-category-filters" class="flex flex-wrap gap-2 mb-4">
+        <button class="cat-button active" data-cat="All">All</button>
+        <button class="cat-button" data-cat="Mammal">Mammals</button>
+        <button class="cat-button" data-cat="Bird">Birds</button>
+        <button class="cat-button" data-cat="Reptile">Reptiles</button>
+        <button class="cat-button" data-cat="Aquatic">Aquatic</button>
+        <button class="cat-button" data-cat="Amphibian">Amphibians</button>
+      </div>
+      <div id="animal-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+      <div id="animal-detail" class="hidden text-center">
+        <img id="animal-img" class="mx-auto w-48 h-48 object-contain rounded shadow" />
+        <h2 id="animal-name" class="text-2xl font-bold mt-4"></h2>
+        <p id="animal-fact" class="text-gray-700 mt-2"></p>
+        <div class="mt-4 flex justify-center gap-4">
+          <button id="animal-sound-btn" class="btn">Play Sound</button>
+          <button id="animal-speak-btn" class="btn">Speak</button>
+        </div>
+        <button id="animal-back" class="mt-6 btn">Back</button>
       </div>
     </div>
-  </div>
 
-  <div id="content-numbers" class="tab-content">
-    <div id="numbers-controls">
-      <label>From: <input type="number" id="num-start" value="0" min="0" max="1000"></label>
-      <label>To: <input type="number" id="num-end" value="20" min="0" max="1000"></label>
-      <button id="numbers-generate">Show</button>
+    <!-- Numbers Content -->
+    <div id="content-numbers" class="hidden">
+      <div class="flex gap-2 mb-4">
+        <input id="num-start" type="number" value="0" class="p-2 border rounded w-20" />
+        <input id="num-end" type="number" value="20" class="p-2 border rounded w-20" />
+        <button id="numbers-generate" class="btn">Generate</button>
+      </div>
+      <div id="numbers-grid" class="grid grid-cols-4 md:grid-cols-8 gap-2"></div>
     </div>
-    <div id="numbers-grid" class="grid numbers-grid"></div>
-  </div>
 
-  <div id="content-letters-en" class="tab-content">
-    <h2>English Alphabet</h2>
-    <div id="letters-en-grid" class="grid letters-grid"></div>
-  </div>
+    <!-- Letters Content -->
+    <div id="content-letters-en" class="hidden">
+      <div id="letters-en-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
+    </div>
+    <div id="content-letters-te" class="hidden">
+      <div id="letters-te-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
+    </div>
+    <div id="content-letters-hi" class="hidden">
+      <div id="letters-hi-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
+    </div>
+  </main>
 
-  <div id="content-letters-te" class="tab-content">
-    <h2>Telugu Letters</h2>
-    <div id="letters-te-grid" class="grid letters-grid"></div>
-  </div>
-
-  <div id="content-letters-hi" class="tab-content">
-    <h2>Hindi Letters</h2>
-    <div id="letters-hi-grid" class="grid letters-grid"></div>
-  </div>
-</main>
-
-<footer>
-  <small>Demo educational app. Replace placeholder media with real animal sounds & images.</small>
-</footer>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
