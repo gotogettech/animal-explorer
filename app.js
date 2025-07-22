@@ -191,7 +191,7 @@ async function init() {
   renderAnimalGrid(filteredAnimals);
   renderNumbers(0, 20);
   await renderLetters('data/letters_english.json', document.getElementById('letters-en-grid'), 'en-IN');
-  await renderLetters('data/letters_telugu.json', document.getElementById('letters-te-grid'), 'te-IN');
+  await renderLetters('data/letters_telugu.json'); //, document.getElementById('letters-te-grid'), 'te-IN');
   await renderLetters('data/letters_hindi.json', document.getElementById('letters-hi-grid'), 'hi-IN');
 }
 
