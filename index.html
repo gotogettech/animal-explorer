@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ultimate Animal Explorer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Ultimate Animal Explorer</h1>
+</header>
+
+<nav id="tabs">
+  <button data-tab="animals" class="active">Animals</button>
+  <button data-tab="numbers">Numbers</button>
+  <button data-tab="letters-en">English Letters</button>
+  <button data-tab="letters-te">Telugu Letters</button>
+  <button data-tab="letters-hi">Hindi Letters</button>
+</nav>
+
+<section id="search-section" class="hidden">
+  <input type="text" id="search-input" placeholder="Search..." />
+</section>
+
+<main>
+  <div id="content-animals" class="tab-content active">
+    <div id="animal-category-filters">
+      <button data-cat="All" class="cat-button active">All</button>
+      <button data-cat="Mammal" class="cat-button">Mammals</button>
+      <button data-cat="Bird" class="cat-button">Birds</button>
+      <button data-cat="Reptile" class="cat-button">Reptiles</button>
+      <button data-cat="Amphibian" class="cat-button">Amphibians</button>
+      <button data-cat="Aquatic" class="cat-button">Aquatic</button>
+    </div>
+    <div id="animal-grid" class="grid"></div>
+    <div id="animal-detail" class="detail hidden">
+      <button id="animal-back">← Back</button>
+      <img id="animal-img" alt="">
+      <h2 id="animal-name"></h2>
+      <p id="animal-fact"></p>
+      <div class="buttons">
+        <button id="animal-sound-btn">🔊 Animal Sound</button>
+        <button id="animal-speak-btn">🗣️ Narrate</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-numbers" class="tab-content">
+    <div id="numbers-controls">
+      <label>From: <input type="number" id="num-start" value="0" min="0" max="1000"></label>
+      <label>To: <input type="number" id="num-end" value="20" min="0" max="1000"></label>
+      <button id="numbers-generate">Show</button>
+    </div>
+    <div id="numbers-grid" class="grid numbers-grid"></div>
+  </div>
+
+  <div id="content-letters-en" class="tab-content">
+    <h2>English Alphabet</h2>
+    <div id="letters-en-grid" class="grid letters-grid"></div>
+  </div>
+
+  <div id="content-letters-te" class="tab-content">
+    <h2>Telugu Letters</h2>
+    <div id="letters-te-grid" class="grid letters-grid"></div>
+  </div>
+
+  <div id="content-letters-hi" class="tab-content">
+    <h2>Hindi Letters</h2>
+    <div id="letters-hi-grid" class="grid letters-grid"></div>
+  </div>
+</main>
+
+<footer>
+  <small>Demo educational app. Replace placeholder media with real animal sounds & images.</small>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

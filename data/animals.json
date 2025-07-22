@@ -1,0 +1,373 @@
+[
+  {
+    "name": "Lion",
+    "category": "Mammal",
+    "image": "assets/images/lion.png",
+    "sound": "assets/sounds/lion.wav",
+    "fact": "The lion is called the king of the jungle and lives in grasslands and savannas."
+  },
+  {
+    "name": "Tiger",
+    "category": "Mammal",
+    "image": "assets/images/tiger.png",
+    "sound": "assets/sounds/tiger.wav",
+    "fact": "Tigers have stripes that help them hide in forests."
+  },
+  {
+    "name": "Elephant",
+    "category": "Mammal",
+    "image": "assets/images/elephant.png",
+    "sound": "assets/sounds/elephant.wav",
+    "fact": "Elephants are the largest land animals and use their trunks to eat and drink."
+  },
+  {
+    "name": "Bear",
+    "category": "Mammal",
+    "image": "assets/images/bear.png",
+    "sound": "assets/sounds/bear.wav",
+    "fact": "Bears eat plants, insects, and sometimes fish."
+  },
+  {
+    "name": "Giraffe",
+    "category": "Mammal",
+    "image": "assets/images/giraffe.png",
+    "sound": "assets/sounds/giraffe.wav",
+    "fact": "Giraffes have very long necks to reach high leaves."
+  },
+  {
+    "name": "Zebra",
+    "category": "Mammal",
+    "image": "assets/images/zebra.png",
+    "sound": "assets/sounds/zebra.wav",
+    "fact": "Zebras have unique black and white stripes."
+  },
+  {
+    "name": "Monkey",
+    "category": "Mammal",
+    "image": "assets/images/monkey.png",
+    "sound": "assets/sounds/monkey.wav",
+    "fact": "Monkeys are playful and use their hands and tails to climb."
+  },
+  {
+    "name": "Dog",
+    "category": "Mammal",
+    "image": "assets/images/dog.png",
+    "sound": "assets/sounds/dog.wav",
+    "fact": "Dogs are friendly animals that live with people."
+  },
+  {
+    "name": "Cat",
+    "category": "Mammal",
+    "image": "assets/images/cat.png",
+    "sound": "assets/sounds/cat.wav",
+    "fact": "Cats are curious pets that purr when happy."
+  },
+  {
+    "name": "Cow",
+    "category": "Mammal",
+    "image": "assets/images/cow.png",
+    "sound": "assets/sounds/cow.wav",
+    "fact": "Cows give us milk and live on farms."
+  },
+  {
+    "name": "Horse",
+    "category": "Mammal",
+    "image": "assets/images/horse.png",
+    "sound": "assets/sounds/horse.wav",
+    "fact": "Horses are strong animals that people ride."
+  },
+  {
+    "name": "Goat",
+    "category": "Mammal",
+    "image": "assets/images/goat.png",
+    "sound": "assets/sounds/goat.wav",
+    "fact": "Goats can climb steep hills and give milk."
+  },
+  {
+    "name": "Sheep",
+    "category": "Mammal",
+    "image": "assets/images/sheep.png",
+    "sound": "assets/sounds/sheep.wav",
+    "fact": "Sheep grow wool that we can use for clothes."
+  },
+  {
+    "name": "Kangaroo",
+    "category": "Mammal",
+    "image": "assets/images/kangaroo.png",
+    "sound": "assets/sounds/kangaroo.wav",
+    "fact": "Kangaroos carry babies in a pouch and hop."
+  },
+  {
+    "name": "Panda",
+    "category": "Mammal",
+    "image": "assets/images/panda.png",
+    "sound": "assets/sounds/panda.wav",
+    "fact": "Pandas mostly eat bamboo and live in China."
+  },
+  {
+    "name": "Camel",
+    "category": "Mammal",
+    "image": "assets/images/camel.png",
+    "sound": "assets/sounds/camel.wav",
+    "fact": "Camels store fat in their humps and live in deserts."
+  },
+  {
+    "name": "Rabbit",
+    "category": "Mammal",
+    "image": "assets/images/rabbit.png",
+    "sound": "assets/sounds/rabbit.wav",
+    "fact": "Rabbits have long ears and like to eat carrots and greens."
+  },
+  {
+    "name": "Deer",
+    "category": "Mammal",
+    "image": "assets/images/deer.png",
+    "sound": "assets/sounds/deer.wav",
+    "fact": "Deer are shy animals that live in forests and fields."
+  },
+  {
+    "name": "Fox",
+    "category": "Mammal",
+    "image": "assets/images/fox.png",
+    "sound": "assets/sounds/fox.wav",
+    "fact": "Foxes are clever hunters that move quietly."
+  },
+  {
+    "name": "Wolf",
+    "category": "Mammal",
+    "image": "assets/images/wolf.png",
+    "sound": "assets/sounds/wolf.wav",
+    "fact": "Wolves live and hunt in packs."
+  },
+  {
+    "name": "Parrot",
+    "category": "Bird",
+    "image": "assets/images/parrot.png",
+    "sound": "assets/sounds/parrot.wav",
+    "fact": "Parrots are colorful birds that can mimic sounds and words."
+  },
+  {
+    "name": "Owl",
+    "category": "Bird",
+    "image": "assets/images/owl.png",
+    "sound": "assets/sounds/owl.wav",
+    "fact": "Owls can see well at night and say hoo hoo."
+  },
+  {
+    "name": "Peacock",
+    "category": "Bird",
+    "image": "assets/images/peacock.png",
+    "sound": "assets/sounds/peacock.wav",
+    "fact": "Peacocks spread big colorful tails to show off."
+  },
+  {
+    "name": "Sparrow",
+    "category": "Bird",
+    "image": "assets/images/sparrow.png",
+    "sound": "assets/sounds/sparrow.wav",
+    "fact": "Sparrows are small birds that live near people."
+  },
+  {
+    "name": "Crow",
+    "category": "Bird",
+    "image": "assets/images/crow.png",
+    "sound": "assets/sounds/crow.wav",
+    "fact": "Crows are smart black birds."
+  },
+  {
+    "name": "Duck",
+    "category": "Bird",
+    "image": "assets/images/duck.png",
+    "sound": "assets/sounds/duck.wav",
+    "fact": "Ducks float on water and say quack."
+  },
+  {
+    "name": "Eagle",
+    "category": "Bird",
+    "image": "assets/images/eagle.png",
+    "sound": "assets/sounds/eagle.wav",
+    "fact": "Eagles are large birds that fly high and hunt."
+  },
+  {
+    "name": "Penguin",
+    "category": "Bird",
+    "image": "assets/images/penguin.png",
+    "sound": "assets/sounds/penguin.wav",
+    "fact": "Penguins are birds that cannot fly but swim well."
+  },
+  {
+    "name": "Flamingo",
+    "category": "Bird",
+    "image": "assets/images/flamingo.png",
+    "sound": "assets/sounds/flamingo.wav",
+    "fact": "Flamingos stand on one leg and are pink."
+  },
+  {
+    "name": "Woodpecker",
+    "category": "Bird",
+    "image": "assets/images/woodpecker.png",
+    "sound": "assets/sounds/woodpecker.wav",
+    "fact": "Woodpeckers peck trees to find insects."
+  },
+  {
+    "name": "Pigeon",
+    "category": "Bird",
+    "image": "assets/images/pigeon.png",
+    "sound": "assets/sounds/pigeon.wav",
+    "fact": "Pigeons are common city birds that coo."
+  },
+  {
+    "name": "Swan",
+    "category": "Bird",
+    "image": "assets/images/swan.png",
+    "sound": "assets/sounds/swan.wav",
+    "fact": "Swans glide on water with long necks."
+  },
+  {
+    "name": "Kingfisher",
+    "category": "Bird",
+    "image": "assets/images/kingfisher.png",
+    "sound": "assets/sounds/kingfisher.wav",
+    "fact": "Kingfishers dive into water to catch fish."
+  },
+  {
+    "name": "Hen",
+    "category": "Bird",
+    "image": "assets/images/hen.png",
+    "sound": "assets/sounds/hen.wav",
+    "fact": "Hens live on farms and lay eggs."
+  },
+  {
+    "name": "Rooster",
+    "category": "Bird",
+    "image": "assets/images/rooster.png",
+    "sound": "assets/sounds/rooster.wav",
+    "fact": "Roosters say cock-a-doodle-doo in the morning."
+  },
+  {
+    "name": "Snake",
+    "category": "Reptile",
+    "image": "assets/images/snake.png",
+    "sound": "assets/sounds/snake.wav",
+    "fact": "Snakes have no legs and move by slithering."
+  },
+  {
+    "name": "Crocodile",
+    "category": "Reptile",
+    "image": "assets/images/crocodile.png",
+    "sound": "assets/sounds/crocodile.wav",
+    "fact": "Crocodiles live in rivers and have strong jaws."
+  },
+  {
+    "name": "Turtle",
+    "category": "Reptile",
+    "image": "assets/images/turtle.png",
+    "sound": "assets/sounds/turtle.wav",
+    "fact": "Turtles have hard shells for protection."
+  },
+  {
+    "name": "Lizard",
+    "category": "Reptile",
+    "image": "assets/images/lizard.png",
+    "sound": "assets/sounds/lizard.wav",
+    "fact": "Lizards can climb and some can drop their tails."
+  },
+  {
+    "name": "Chameleon",
+    "category": "Reptile",
+    "image": "assets/images/chameleon.png",
+    "sound": "assets/sounds/chameleon.wav",
+    "fact": "Chameleons change color to blend in."
+  },
+  {
+    "name": "Iguana",
+    "category": "Reptile",
+    "image": "assets/images/iguana.png",
+    "sound": "assets/sounds/iguana.wav",
+    "fact": "Iguanas are large lizards that like warm places."
+  },
+  {
+    "name": "Alligator",
+    "category": "Reptile",
+    "image": "assets/images/alligator.png",
+    "sound": "assets/sounds/alligator.wav",
+    "fact": "Alligators look like crocodiles but have wider snouts."
+  },
+  {
+    "name": "Gecko",
+    "category": "Reptile",
+    "image": "assets/images/gecko.png",
+    "sound": "assets/sounds/gecko.wav",
+    "fact": "Geckos can stick to walls and ceilings."
+  },
+  {
+    "name": "Python",
+    "category": "Reptile",
+    "image": "assets/images/python.png",
+    "sound": "assets/sounds/python.wav",
+    "fact": "Pythons are big snakes that squeeze."
+  },
+  {
+    "name": "Tortoise",
+    "category": "Reptile",
+    "image": "assets/images/tortoise.png",
+    "sound": "assets/sounds/tortoise.wav",
+    "fact": "Tortoises live mostly on land and move slowly."
+  },
+  {
+    "name": "Frog",
+    "category": "Amphibian",
+    "image": "assets/images/frog.png",
+    "sound": "assets/sounds/frog.wav",
+    "fact": "Frogs jump and live near water."
+  },
+  {
+    "name": "Toad",
+    "category": "Amphibian",
+    "image": "assets/images/toad.png",
+    "sound": "assets/sounds/toad.wav",
+    "fact": "Toads have bumpy skin and live on land."
+  },
+  {
+    "name": "Salamander",
+    "category": "Amphibian",
+    "image": "assets/images/salamander.png",
+    "sound": "assets/sounds/salamander.wav",
+    "fact": "Salamanders have long bodies and live in wet places."
+  },
+  {
+    "name": "Dolphin",
+    "category": "Aquatic",
+    "image": "assets/images/dolphin.png",
+    "sound": "assets/sounds/dolphin.wav",
+    "fact": "Dolphins are smart swimmers that leap from the ocean."
+  },
+  {
+    "name": "Fish",
+    "category": "Aquatic",
+    "image": "assets/images/fish.png",
+    "sound": "assets/sounds/fish.wav",
+    "fact": "Fish live in water and breathe with gills."
+  },
+  {
+    "name": "Whale",
+    "category": "Aquatic",
+    "image": "assets/images/whale.png",
+    "sound": "assets/sounds/whale.wav",
+    "fact": "Whales are giant animals that live in the ocean."
+  },
+  {
+    "name": "Shark",
+    "category": "Aquatic",
+    "image": "assets/images/shark.png",
+    "sound": "assets/sounds/shark.wav",
+    "fact": "Sharks are strong fish with sharp teeth."
+  },
+  {
+    "name": "Octopus",
+    "category": "Aquatic",
+    "image": "assets/images/octopus.png",
+    "sound": "assets/sounds/octopus.wav",
+    "fact": "Octopuses have eight arms and can squirt ink."
+  }
+]
