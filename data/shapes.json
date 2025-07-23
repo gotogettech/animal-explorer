@@ -1,0 +1,8 @@
+[
+  { "name": "Circle", "color": "#f87171", "sound": "sounds/shapes/circle.mp3" },
+  { "name": "Square", "color": "#60a5fa", "sound": "sounds/shapes/square.mp3" },
+  { "name": "Triangle", "color": "#34d399", "sound": "sounds/shapes/triangle.mp3" },
+  { "name": "Rectangle", "color": "#fbbf24", "sound": "sounds/shapes/rectangle.mp3" },
+  { "name": "Star", "color": "#a78bfa", "sound": "sounds/shapes/star.mp3" },
+  { "name": "Heart", "color": "#f472b6", "sound": "sounds/shapes/heart.mp3" }
+]

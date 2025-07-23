@@ -1,0 +1,11 @@
+[
+  { "name": "Red", "color": "#ef4444", "sound": "sounds/colors/red.mp3" },
+  { "name": "Blue", "color": "#3b82f6", "sound": "sounds/colors/blue.mp3" },
+  { "name": "Green", "color": "#10b981", "sound": "sounds/colors/green.mp3" },
+  { "name": "Yellow", "color": "#facc15", "sound": "sounds/colors/yellow.mp3" },
+  { "name": "Orange", "color": "#fb923c", "sound": "sounds/colors/orange.mp3" },
+  { "name": "Purple", "color": "#8b5cf6", "sound": "sounds/colors/purple.mp3" },
+  { "name": "Pink", "color": "#ec4899", "sound": "sounds/colors/pink.mp3" },
+  { "name": "Black", "color": "#111827", "sound": "sounds/colors/black.mp3" },
+  { "name": "White", "color": "#f3f4f6", "sound": "sounds/colors/white.mp3" }
+]
