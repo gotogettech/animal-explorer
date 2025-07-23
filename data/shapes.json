@@ -5,7 +5,7 @@
   { "name": "Rectangle", "color": "#6BCB77", "icon": "▭", "sound": "sounds/rectangle.mp3" },
   { "name": "Star", "color": "#FFB830", "icon": "⭐", "sound": "sounds/star.mp3" },
   { "name": "Heart", "color": "#FF4C61", "icon": "❤", "sound": "sounds/heart.mp3" },
-  { "name": "Oval", "color": "#9B59B6", "icon": "⬯", "sound": "sounds/oval.mp3" }
+  { "name": "Oval", "color": "#9B59B6", "icon": "⬯", "sound": "sounds/oval.mp3" },
   { "name": "Pentagon","color": "#f472b6", "icon": "assets/images/shapes/pentagon.svg","sound": "sounds/shapes/pentagon.mp3" },
   { "name": "Hexagon","color": "#f59e0b", "icon": "assets/images/shapes/hexagon.svg","sound": "sounds/shapes/hexagon.mp3" },
   { "name": "Octagon","color": "#10b981", "icon": "assets/images/shapes/octagon.svg","sound": "sounds/shapes/octagon.mp3" },
