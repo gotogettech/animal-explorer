@@ -231,21 +231,19 @@ async function renderShapes() {
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
-    div.className = 'shape-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
-    div.style.backgroundColor = shape.color;
-    const fg = readableTextColor(shape.color);
-    div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${shape.name}</p>`;
+    div.className = 'shape-card p-4 rounded-lg shadow-lg text-center cursor-pointer hover:scale-110 transition-transform bg-white';
+    div.innerHTML = `
+      <img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
+      <p class="font-bold text-lg text-gray-800">${shape.name}</p>
+    `;
     div.addEventListener('click', () => {
-      if (shape.sound) {
-        new Audio(shape.sound).play().catch(()=>speak(shape.name,'en-IN'));
-      } else {
-        speak(shape.name, 'en-IN');
-      }
+      speak(shape.name, 'en-IN');
     });
     shapesGrid.appendChild(div);
   });
   console.log("Rendered shapes:", shapes.length);
 }
+
 
 // ------------------ Colors ------------------
 async function renderColors() {
