@@ -1,4 +1,4 @@
-// Little Genius Explorer - Modern & Animated (Shapes + Colors Fix)
+// Little Genius Explorer - Modern & Animated (Shapes + Colors Fix + Games)
 
 // ------------------ Utilities ------------------
 async function loadJSON(path) {
@@ -8,11 +8,10 @@ async function loadJSON(path) {
     return await res.json();
   } catch (err) {
     console.error("loadJSON error:", err);
-    return []; // fail-safe: return empty so UI doesn't crash
+    return [];
   }
 }
 
-// Number to English words 0-1000
 function numberToWords(num) {
   const ones = ['zero','one','two','three','four','five','six','seven','eight','nine'];
   const teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
@@ -31,7 +30,6 @@ function numberToWords(num) {
   return String(num);
 }
 
-// Speech synthesis fallback
 function speak(text, lang='en-IN') {
   if (!window.speechSynthesis) { alert('Speech not supported'); return; }
   const utt = new SpeechSynthesisUtterance(text);
@@ -42,9 +40,7 @@ function speak(text, lang='en-IN') {
   speechSynthesis.speak(utt);
 }
 
-// Pick readable text color (black/white) over a background
 function readableTextColor(hex) {
-  // strip #
   const h = hex.replace('#','');
   let r,g,b;
   if (h.length === 3) {
@@ -56,9 +52,8 @@ function readableTextColor(hex) {
     g = parseInt(h.slice(2,4),16);
     b = parseInt(h.slice(4,6),16);
   }
-  // luminance
   const l = (0.299*r + 0.587*g + 0.114*b)/255;
-  return l > 0.6 ? '#111827' : '#FFFFFF'; // dark text on light bg, white on dark
+  return l > 0.6 ? '#111827' : '#FFFFFF';
 }
 
 // ------------------ Global State ------------------
@@ -75,10 +70,8 @@ const contents = {
   'letters-en': document.getElementById('content-letters-en'),
   'letters-te': document.getElementById('content-letters-te'),
   'letters-hi': document.getElementById('content-letters-hi'),
-  // NEW:
   shapes: document.getElementById('content-shapes'),
   colors: document.getElementById('content-colors'),
-  // include this only if you added a Games section:
   games: document.getElementById('content-games') || null
 };
 const searchSection = document.getElementById('search-section');
@@ -86,17 +79,10 @@ const searchInput = document.getElementById('search-input');
 
 function toggleSection(tab) {
   Object.entries(contents).forEach(([key, el]) => {
-    if (!el) return; // skip missing sections
-    if (key === tab) {
-      el.classList.remove('hidden');
-    } else {
-      el.classList.add('hidden');
-    }
+    if (!el) return;
+    el.classList.toggle('hidden', key !== tab);
   });
-  if (tab === 'animals') searchSection.classList.remove('hidden');
-  else searchSection.classList.add('hidden');
-  // console debug
-  console.log("Switched to tab:", tab);
+  searchSection.classList.toggle('hidden', tab !== 'animals');
 }
 
 tabs.forEach(btn => {
@@ -159,7 +145,6 @@ animalSpeakBtn.addEventListener('click', () => {
   speak(`${currentAnimal.name}. ${currentAnimal.fact}`, 'en-IN');
 });
 
-// Category filter
 catButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     catButtons.forEach(b => b.classList.remove('active'));
@@ -170,11 +155,9 @@ catButtons.forEach(btn => {
   });
 });
 
-// Search
 searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim().toLowerCase();
-  const list = filteredAnimals.filter(a => a.name.toLowerCase().includes(q));
-  renderAnimalGrid(list);
+  renderAnimalGrid(filteredAnimals.filter(a => a.name.toLowerCase().includes(q)));
 });
 
 // ------------------ Numbers ------------------
@@ -209,12 +192,8 @@ async function renderLetters(path, gridEl, lang) {
     div.className = 'letter-card bg-gradient-to-br from-yellow-200 to-pink-100 rounded-lg shadow-md text-3xl font-bold p-4 text-center cursor-pointer hover:scale-110 transition-transform';
     div.textContent = l.char;
     div.addEventListener('click', () => {
-      if (l.sound) {
-        const audio = new Audio(l.sound);
-        audio.play().catch(()=>speak(l.char, lang));
-      } else {
-        speak(l.char, lang);
-      }
+      if (l.sound) new Audio(l.sound).play().catch(()=>speak(l.char, lang));
+      else speak(l.char, lang);
     });
     gridEl.appendChild(div);
   });
@@ -224,10 +203,7 @@ async function renderLetters(path, gridEl, lang) {
 async function renderShapes() {
   const shapes = await loadJSON('data/shapes.json');
   const shapesGrid = document.getElementById('shapes-grid');
-  if (!shapesGrid) {
-    console.warn("No shapes grid found in DOM.");
-    return;
-  }
+  if (!shapesGrid) return;
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
@@ -236,23 +212,16 @@ async function renderShapes() {
       <img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
       <p class="font-bold text-lg text-gray-800">${shape.name}</p>
     `;
-    div.addEventListener('click', () => {
-      speak(shape.name, 'en-IN');
-    });
+    div.addEventListener('click', () => speak(shape.name, 'en-IN'));
     shapesGrid.appendChild(div);
   });
-  console.log("Rendered shapes:", shapes.length);
 }
-
 
 // ------------------ Colors ------------------
 async function renderColors() {
   const colors = await loadJSON('data/colors.json');
   const colorsGrid = document.getElementById('colors-grid');
-  if (!colorsGrid) {
-    console.warn("No colors grid found in DOM.");
-    return;
-  }
+  if (!colorsGrid) return;
   colorsGrid.innerHTML = '';
   colors.forEach(color => {
     const div = document.createElement('div');
@@ -261,15 +230,50 @@ async function renderColors() {
     const fg = readableTextColor(color.color);
     div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${color.name}</p>`;
     div.addEventListener('click', () => {
-      if (color.sound) {
-        new Audio(color.sound).play().catch(()=>speak(color.name,'en-IN'));
-      } else {
-        speak(color.name, 'en-IN');
-      }
+      if (color.sound) new Audio(color.sound).play().catch(()=>speak(color.name,'en-IN'));
+      else speak(color.name, 'en-IN');
     });
     colorsGrid.appendChild(div);
   });
-  console.log("Rendered colors:", colors.length);
+}
+
+// ------------------ Games ------------------
+const gameArea = document.getElementById('game-area');
+const gameContent = document.getElementById('game-content');
+const gameButtons = document.querySelectorAll('.game-btn');
+const backToMenu = document.getElementById('back-to-menu');
+
+if (gameButtons) {
+  gameButtons.forEach(btn => {
+    btn.addEventListener('click', () => startGame(btn.dataset.game));
+  });
+}
+if (backToMenu) {
+  backToMenu.addEventListener('click', () => {
+    gameArea.classList.add('hidden');
+    document.querySelector('.games-menu').classList.remove('hidden');
+    gameContent.innerHTML = '';
+  });
+}
+
+function startGame(gameType) {
+  document.querySelector('.games-menu').classList.add('hidden');
+  gameArea.classList.remove('hidden');
+  if (gameType === 'shape-match') loadShapeMatchGame();
+  if (gameType === 'color-memory') loadColorMemoryGame();
+  if (gameType === 'number-quiz') loadNumberQuizGame();
+}
+
+function loadShapeMatchGame() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Find the Circle!</h3><p>Coming soon...</p>`;
+}
+
+function loadColorMemoryGame() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Color Memory!</h3><p>Coming soon...</p>`;
+}
+
+function loadNumberQuizGame() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Number Quiz!</h3><p>Coming soon...</p>`;
 }
 
 // ------------------ Init ------------------
@@ -283,7 +287,6 @@ async function init() {
   await renderLetters('data/letters_hindi.json', document.getElementById('letters-hi-grid'), 'hi-IN');
   await renderShapes();
   await renderColors();
-  //console.log("Init complete.");
 }
 
 window.addEventListener('load', () => {
