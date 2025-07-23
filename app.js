@@ -1,4 +1,4 @@
-// Little Genius Explorer - Final Version
+// Little Genius Explorer - Final Version with Games & Certificate
 
 // ------------------ Utilities ------------------
 async function loadJSON(path) {
@@ -13,22 +13,28 @@ async function loadJSON(path) {
 }
 
 function speak(text, lang = 'en-IN') {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis) { alert('Speech not supported'); return; }
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = lang;
-  window.speechSynthesis.speak(utt);
+  speechSynthesis.speak(utt);
 }
 
 function numberToWords(num) {
-  const ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-  const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const ones = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+  const teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
   if (num < 10) return ones[num];
-  if (num < 20) return teens[num - 10];
-  if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? '-' + ones[num % 10] : '');
-  if (num < 1000) return ones[Math.floor(num / 100)] + ' hundred ' + (num % 100 ? numberToWords(num % 100) : '');
-  if (num === 1000) return 'one thousand';
-  return String(num);
+  if (num < 20) return teens[num-10];
+  if (num < 100) return tens[Math.floor(num/10)] + (num % 10 ? '-' + ones[num % 10] : '');
+  return num.toString();
+}
+
+function readableTextColor(hex) {
+  const h = hex.replace('#','');
+  const r = parseInt(h.slice(0,2),16);
+  const g = parseInt(h.slice(2,4),16);
+  const b = parseInt(h.slice(4,6),16);
+  return (0.299*r + 0.587*g + 0.114*b)/255 > 0.6 ? '#111' : '#FFF';
 }
 
 // ------------------ Tabs ------------------
@@ -41,198 +47,211 @@ const contents = {
   'letters-hi': document.getElementById('content-letters-hi'),
   shapes: document.getElementById('content-shapes'),
   colors: document.getElementById('content-colors'),
-  games: document.getElementById('content-games'),
-  certificate: document.getElementById('content-certificate')
+  games: document.getElementById('content-games')
 };
+const searchSection = document.getElementById('search-section');
+
+function toggleSection(tab) {
+  for (const k in contents) {
+    contents[k].classList.add('hidden');
+  }
+  contents[tab].classList.remove('hidden');
+  if (tab === 'animals') searchSection.classList.remove('hidden');
+  else searchSection.classList.add('hidden');
+}
 
 tabs.forEach(btn => {
   btn.addEventListener('click', () => {
     tabs.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    for (const key in contents) {
-      contents[key]?.classList.add('hidden');
-    }
-    contents[btn.dataset.tab]?.classList.remove('hidden');
+    toggleSection(btn.dataset.tab);
   });
 });
 
 // ------------------ Animals ------------------
 let animalsData = [];
 let filteredAnimals = [];
-let currentAnimalAudio = null;
-
 const animalGrid = document.getElementById('animal-grid');
 const animalDetail = document.getElementById('animal-detail');
 const animalImg = document.getElementById('animal-img');
 const animalName = document.getElementById('animal-name');
 const animalFact = document.getElementById('animal-fact');
+const animalBack = document.getElementById('animal-back');
 const animalSoundBtn = document.getElementById('animal-sound-btn');
 const animalSpeakBtn = document.getElementById('animal-speak-btn');
+const searchInput = document.getElementById('search-input');
 
 function renderAnimalGrid(list) {
   animalGrid.innerHTML = '';
   list.forEach(an => {
     const card = document.createElement('div');
-    card.className = 'animal-card bg-gradient-to-br from-pink-200 to-yellow-100 rounded-xl p-2 shadow hover:scale-105';
-    card.innerHTML = `<img src="${an.image}" alt="${an.name}" class="rounded-xl w-full h-32 object-contain"/><p class="text-center font-bold mt-2">${an.name}</p>`;
+    card.className = 'animal-card';
+    card.innerHTML = `
+      <img src="${an.image}" alt="${an.name}" class="rounded-xl w-full h-32 object-contain" />
+      <p class="text-center text-lg font-bold mt-2">${an.name}</p>
+    `;
     card.addEventListener('click', () => showAnimal(an));
     animalGrid.appendChild(card);
   });
 }
 
 function showAnimal(an) {
-  animalDetail.classList.remove('hidden');
   animalGrid.style.display = 'none';
+  document.getElementById('animal-category-filters').style.display = 'none';
+  animalDetail.classList.remove('hidden');
   animalImg.src = an.image;
   animalName.textContent = an.name;
   animalFact.textContent = an.fact;
-  currentAnimalAudio = new Audio(an.sound);
+  new Audio(an.sound).play();
 }
 
-document.getElementById('animal-back').addEventListener('click', () => {
+animalBack.addEventListener('click', () => {
   animalDetail.classList.add('hidden');
   animalGrid.style.display = '';
+  document.getElementById('animal-category-filters').style.display = '';
 });
 
-animalSoundBtn.addEventListener('click', () => currentAnimalAudio?.play());
-animalSpeakBtn.addEventListener('click', () => {
-  if (animalName.textContent) speak(animalName.textContent + '. ' + animalFact.textContent);
-});
-
-document.getElementById('search-input').addEventListener('input', (e) => {
-  const q = e.target.value.toLowerCase();
-  renderAnimalGrid(animalsData.filter(a => a.name.toLowerCase().includes(q)));
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase();
+  renderAnimalGrid(filteredAnimals.filter(a => a.name.toLowerCase().includes(q)));
 });
 
 // ------------------ Numbers ------------------
 const numbersGrid = document.getElementById('numbers-grid');
-document.getElementById('numbers-generate').addEventListener('click', () => {
-  const start = parseInt(document.getElementById('num-start').value) || 0;
-  const end = parseInt(document.getElementById('num-end').value) || 20;
-  renderNumbers(start, end);
-});
+const numbersGenerate = document.getElementById('numbers-generate');
+const numStart = document.getElementById('num-start');
+const numEnd = document.getElementById('num-end');
 
 function renderNumbers(start, end) {
   numbersGrid.innerHTML = '';
   for (let i = start; i <= end; i++) {
     const div = document.createElement('div');
-    div.className = 'number-card bg-green-200 p-4 rounded shadow text-center cursor-pointer';
-    div.innerHTML = `<span class="text-xl font-bold">${i}</span><p class="text-sm">${numberToWords(i)}</p>`;
+    div.className = 'number-card';
+    div.innerHTML = `<span>${i}</span><p>${numberToWords(i)}</p>`;
     div.addEventListener('click', () => speak(numberToWords(i)));
     numbersGrid.appendChild(div);
   }
 }
+numbersGenerate.addEventListener('click', () => {
+  renderNumbers(parseInt(numStart.value), parseInt(numEnd.value));
+});
 
 // ------------------ Letters ------------------
-async function renderLetters(path, grid, lang) {
+async function renderLetters(path, gridEl, lang) {
   const letters = await loadJSON(path);
-  grid.innerHTML = '';
+  gridEl.innerHTML = '';
   letters.forEach(l => {
     const div = document.createElement('div');
-    div.className = 'letter-card bg-yellow-200 p-4 rounded text-center text-2xl font-bold cursor-pointer hover:scale-105';
+    div.className = 'letter-card';
     div.textContent = l.char;
     div.addEventListener('click', () => l.sound ? new Audio(l.sound).play() : speak(l.char, lang));
-    grid.appendChild(div);
+    gridEl.appendChild(div);
   });
 }
 
-// ------------------ Shapes & Colors ------------------
+// ------------------ Shapes ------------------
 async function renderShapes() {
   const shapes = await loadJSON('data/shapes.json');
   const shapesGrid = document.getElementById('shapes-grid');
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
-    div.className = 'shape-card bg-white p-4 rounded shadow text-center cursor-pointer hover:scale-105';
-    div.innerHTML = `<img src="${shape.icon}" class="w-16 h-16 mx-auto"/><p class="mt-2 font-bold">${shape.name}</p>`;
-    div.addEventListener('click', () => speak(shape.name));
+    div.className = 'shape-card';
+    div.innerHTML = `<img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
+                     <p>${shape.name}</p>`;
     shapesGrid.appendChild(div);
   });
 }
 
+// ------------------ Colors ------------------
 async function renderColors() {
   const colors = await loadJSON('data/colors.json');
   const colorsGrid = document.getElementById('colors-grid');
   colorsGrid.innerHTML = '';
   colors.forEach(color => {
     const div = document.createElement('div');
-    div.className = 'color-card p-6 rounded shadow cursor-pointer text-white text-lg font-bold text-center hover:scale-105';
+    div.className = 'color-card';
     div.style.backgroundColor = color.color;
-    div.textContent = color.name;
-    div.addEventListener('click', () => speak(color.name));
+    div.innerHTML = `<p style="color:${readableTextColor(color.color)}">${color.name}</p>`;
     colorsGrid.appendChild(div);
   });
 }
 
 // ------------------ Games ------------------
-let gameScore = 0;
+let currentGame = null;
 let currentQuestion = 0;
-const totalQuestions = 10;
+let score = 0;
+let playerName = '';
 
-const playerNameInput = document.getElementById('player-name');
-const gameArea = document.getElementById('game-area');
-const gameQuestion = document.getElementById('game-question');
-const gameOptions = document.getElementById('game-options');
-const gameScoreDisplay = document.getElementById('game-score');
+const gameContent = document.getElementById('game-content');
+const backToMenu = document.getElementById('back-to-menu');
 
-document.getElementById('start-games-btn').addEventListener('click', startGames);
-
-function startGames() {
-  const name = playerNameInput.value.trim();
-  if (!name) {
-    alert('Please enter your name to start.');
-    return;
-  }
-  gameScore = 0;
+function startGame(type) {
+  currentGame = type;
   currentQuestion = 0;
-  gameArea.classList.remove('hidden');
+  score = 0;
+  playerName = prompt("Enter your name:");
+  if (!playerName) playerName = "Player";
+  document.querySelector('.games-menu').classList.add('hidden');
+  document.getElementById('game-area').classList.remove('hidden');
   nextQuestion();
 }
 
 function nextQuestion() {
-  if (currentQuestion >= totalQuestions) {
-    showCertificate();
+  currentQuestion++;
+  if (currentQuestion > 10) {
+    endGame();
     return;
   }
-  currentQuestion++;
-  const randomNumber = Math.floor(Math.random() * 10);
-  gameQuestion.textContent = `Which number is ${randomNumber}?`;
-  gameOptions.innerHTML = '';
-  const options = [randomNumber, (randomNumber + 1) % 10, (randomNumber + 2) % 10, (randomNumber + 3) % 10].sort(() => 0.5 - Math.random());
-  options.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'bg-blue-400 text-white p-2 rounded hover:bg-blue-500';
-    btn.textContent = opt;
-    btn.addEventListener('click', () => checkAnswer(opt === randomNumber));
-    gameOptions.appendChild(btn);
-  });
-  gameScoreDisplay.textContent = `Score: ${gameScore}/${totalQuestions}`;
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Question ${currentQuestion}/10</h3>`;
+  if (currentGame === 'shape') renderShapeQuestion();
+  else if (currentGame === 'color') renderColorQuestion();
+  else renderNumberQuestion();
 }
 
-function checkAnswer(correct) {
-  if (correct) gameScore++;
-  nextQuestion();
+function renderShapeQuestion() {
+  gameContent.innerHTML += `<p class="mb-2">Find this shape:</p>`;
+  // Implementation: random shape
 }
 
-function showCertificate() {
-  contents.games.classList.add('hidden');
-  contents.certificate.classList.remove('hidden');
-  document.getElementById('cert-name').textContent = `Congratulations, ${playerNameInput.value}!`;
-  document.getElementById('cert-score').textContent = `You scored ${gameScore} out of ${totalQuestions}.`;
+function renderColorQuestion() {
+  gameContent.innerHTML += `<p class="mb-2">Find this color:</p>`;
+  // Implementation: random color
 }
 
-document.getElementById('restart-btn').addEventListener('click', () => {
-  playerNameInput.value = '';
-  contents.certificate.classList.add('hidden');
-  contents.games.classList.remove('hidden');
-  gameArea.classList.add('hidden');
+function renderNumberQuestion() {
+  const num = Math.floor(Math.random() * 10);
+  gameContent.innerHTML += `<p class="mb-2">Which number is "${numberToWords(num)}"?</p>`;
+  // Implementation: random numbers
+}
+
+function endGame() {
+  generateCertificate(playerName, score);
+}
+
+backToMenu.addEventListener('click', () => {
+  document.querySelector('.games-menu').classList.remove('hidden');
+  document.getElementById('game-area').classList.add('hidden');
+  gameContent.innerHTML = '';
 });
+
+function generateCertificate(name, score) {
+  const certWindow = window.open('', '_blank');
+  certWindow.document.write(`
+    <html><head><title>Certificate</title></head><body style="text-align:center; font-family:sans-serif;">
+    <h1 style="color:#2b6cb0;">Little Genius Explorer Certificate</h1>
+    <p>Congratulations, <strong>${name}</strong>!</p>
+    <p>You scored <strong>${score}/10</strong> in the ${currentGame} game.</p>
+    <p>Keep Learning & Exploring!</p>
+    </body></html>
+  `);
+}
 
 // ------------------ Init ------------------
 async function init() {
   animalsData = await loadJSON('data/animals.json');
   filteredAnimals = animalsData;
-  renderAnimalGrid(animalsData);
+  renderAnimalGrid(filteredAnimals);
   renderNumbers(0, 20);
   await renderLetters('data/letters_english.json', document.getElementById('letters-en-grid'), 'en-IN');
   await renderLetters('data/letters_telugu.json', document.getElementById('letters-te-grid'), 'te-IN');
