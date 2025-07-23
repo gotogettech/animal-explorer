@@ -135,6 +135,30 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* Shapes */
+.shape-card {
+  animation: popIn 0.5s ease-in-out;
+  transition: transform 0.3s;
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+}
+
+.shape-card:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Colors */
+.color-card {
+  animation: popIn 0.5s ease-in-out;
+  transition: transform 0.3s;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.color-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 /* Search Box */
 #search-input {
   width: 80%;
@@ -150,4 +174,9 @@ button:hover {
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
