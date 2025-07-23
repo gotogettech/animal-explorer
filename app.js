@@ -256,16 +256,65 @@ if (backToMenu) {
   });
 }
 
-function startGame(gameType) {
+let shapesForGame = [];
+let targetShape = null;
+let score = 0;
+
+async function startGame(gameType) {
   document.querySelector('.games-menu').classList.add('hidden');
   gameArea.classList.remove('hidden');
-  if (gameType === 'shape-match') loadShapeMatchGame();
+
+  if (gameType === 'shape-match') await loadShapeMatchGame();
   if (gameType === 'color-memory') loadColorMemoryGame();
   if (gameType === 'number-quiz') loadNumberQuizGame();
 }
 
-function loadShapeMatchGame() {
-  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Find the Circle!</h3><p>Coming soon...</p>`;
+async function loadShapeMatchGame() {
+  shapesForGame = await loadJSON('data/shapes.json');
+  score = 0;
+  renderShapeMatchRound();
+}
+
+function renderShapeMatchRound() {
+  gameContent.innerHTML = '';
+  targetShape = shapesForGame[Math.floor(Math.random() * shapesForGame.length)];
+
+  const question = document.createElement('h3');
+  question.className = 'text-xl font-bold mb-4';
+  question.textContent = `Find the ${targetShape.name}!`;
+  gameContent.appendChild(question);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-4';
+
+  const options = [...shapesForGame].sort(() => Math.random() - 0.5).slice(0, 5);
+  if (!options.includes(targetShape)) options[Math.floor(Math.random() * options.length)] = targetShape;
+
+  options.forEach(shape => {
+    const div = document.createElement('div');
+    div.className = 'p-4 rounded-lg shadow-lg bg-white cursor-pointer hover:scale-105 transition-transform';
+    div.innerHTML = `<img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" /><p class="text-center font-bold">${shape.name}</p>`;
+    div.addEventListener('click', () => checkShapeAnswer(shape));
+    grid.appendChild(div);
+  });
+
+  gameContent.appendChild(grid);
+
+  const scoreDisplay = document.createElement('p');
+  scoreDisplay.className = 'mt-4 text-lg font-semibold';
+  scoreDisplay.textContent = `Score: ${score}`;
+  gameContent.appendChild(scoreDisplay);
+}
+
+function checkShapeAnswer(selectedShape) {
+  if (selectedShape.name === targetShape.name) {
+    score++;
+    speak("Correct!", "en-IN");
+  } else {
+    speak("Try again!", "en-IN");
+    score = Math.max(0, score - 1);
+  }
+  setTimeout(renderShapeMatchRound, 1000);
 }
 
 function loadColorMemoryGame() {
