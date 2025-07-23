@@ -238,92 +238,150 @@ async function renderColors() {
 }
 
 // ------------------ Games ------------------
-const gameArea = document.getElementById('game-area');
-const gameContent = document.getElementById('game-content');
-const gameButtons = document.querySelectorAll('.game-btn');
-const backToMenu = document.getElementById('back-to-menu');
+const gameButtons = document.querySelectorAll(".game-btn");
+const gameArea = document.getElementById("game-area");
+const gameContent = document.getElementById("game-content");
+const backToMenu = document.getElementById("back-to-menu");
 
-if (gameButtons) {
-  gameButtons.forEach(btn => {
-    btn.addEventListener('click', () => startGame(btn.dataset.game));
+gameButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".games-menu").classList.add("hidden");
+    gameArea.classList.remove("hidden");
+    const game = btn.dataset.game;
+    startGame(game);
   });
-}
-if (backToMenu) {
-  backToMenu.addEventListener('click', () => {
-    gameArea.classList.add('hidden');
-    document.querySelector('.games-menu').classList.remove('hidden');
-    gameContent.innerHTML = '';
-  });
-}
+});
 
-let shapesForGame = [];
-let targetShape = null;
-let score = 0;
+backToMenu.addEventListener("click", () => {
+  gameContent.innerHTML = "";
+  gameArea.classList.add("hidden");
+  document.querySelector(".games-menu").classList.remove("hidden");
+});
 
-async function startGame(gameType) {
-  document.querySelector('.games-menu').classList.add('hidden');
-  gameArea.classList.remove('hidden');
-
-  if (gameType === 'shape-match') await loadShapeMatchGame();
-  if (gameType === 'color-memory') loadColorMemoryGame();
-  if (gameType === 'number-quiz') loadNumberQuizGame();
+// Start specific game
+function startGame(game) {
+  gameContent.innerHTML = ""; 
+  if (game === "shape-match") startShapeMatching();
+  else if (game === "color-memory") startColorMemory();
+  else if (game === "number-quiz") startNumberQuiz();
 }
 
-async function loadShapeMatchGame() {
-  shapesForGame = await loadJSON('data/shapes.json');
-  score = 0;
-  renderShapeMatchRound();
-}
+// ---------- Game 1: Shape Matching ----------
+function startShapeMatching() {
+  const shapes = ["circle", "square", "triangle", "star", "heart"];
+  const cards = [...shapes, ...shapes].sort(() => Math.random() - 0.5);
+  let selected = [];
+  let matched = [];
 
-function renderShapeMatchRound() {
-  gameContent.innerHTML = '';
-  targetShape = shapesForGame[Math.floor(Math.random() * shapesForGame.length)];
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Shape Matching Game</h3>
+    <div id="shape-grid" class="grid grid-cols-3 gap-4"></div>`;
 
-  const question = document.createElement('h3');
-  question.className = 'text-xl font-bold mb-4';
-  question.textContent = `Find the ${targetShape.name}!`;
-  gameContent.appendChild(question);
-
-  const grid = document.createElement('div');
-  grid.className = 'grid grid-cols-2 sm:grid-cols-3 gap-4';
-
-  const options = [...shapesForGame].sort(() => Math.random() - 0.5).slice(0, 5);
-  if (!options.includes(targetShape)) options[Math.floor(Math.random() * options.length)] = targetShape;
-
-  options.forEach(shape => {
-    const div = document.createElement('div');
-    div.className = 'p-4 rounded-lg shadow-lg bg-white cursor-pointer hover:scale-105 transition-transform';
-    div.innerHTML = `<img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" /><p class="text-center font-bold">${shape.name}</p>`;
-    div.addEventListener('click', () => checkShapeAnswer(shape));
+  const grid = document.getElementById("shape-grid");
+  cards.forEach(shape => {
+    const div = document.createElement("div");
+    div.className = "bg-gray-200 p-6 rounded cursor-pointer text-center font-bold text-lg";
+    div.textContent = "?";
+    div.dataset.shape = shape;
+    div.addEventListener("click", () => {
+      if (selected.length < 2 && !div.classList.contains("matched")) {
+        div.textContent = shape;
+        selected.push(div);
+        if (selected.length === 2) {
+          setTimeout(() => checkMatch(), 800);
+        }
+      }
+    });
     grid.appendChild(div);
   });
 
-  gameContent.appendChild(grid);
-
-  const scoreDisplay = document.createElement('p');
-  scoreDisplay.className = 'mt-4 text-lg font-semibold';
-  scoreDisplay.textContent = `Score: ${score}`;
-  gameContent.appendChild(scoreDisplay);
-}
-
-function checkShapeAnswer(selectedShape) {
-  if (selectedShape.name === targetShape.name) {
-    score++;
-    speak("Correct!", "en-IN");
-  } else {
-    speak("Try again!", "en-IN");
-    score = Math.max(0, score - 1);
+  function checkMatch() {
+    if (selected[0].dataset.shape === selected[1].dataset.shape) {
+      selected.forEach(el => {
+        el.classList.add("matched", "bg-green-300");
+      });
+      matched.push(selected[0].dataset.shape);
+    } else {
+      selected.forEach(el => (el.textContent = "?"));
+    }
+    selected = [];
+    if (matched.length === shapes.length) {
+      alert("🎉 You matched all shapes!");
+    }
   }
-  setTimeout(renderShapeMatchRound, 1000);
 }
 
-function loadColorMemoryGame() {
-  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Color Memory!</h3><p>Coming soon...</p>`;
+// ---------- Game 2: Color Memory ----------
+function startColorMemory() {
+  const colors = ["red", "blue", "green", "yellow", "purple"];
+  const cards = [...colors, ...colors].sort(() => Math.random() - 0.5);
+  let selected = [];
+
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Color Memory Game</h3>
+    <div id="color-grid" class="grid grid-cols-3 gap-4"></div>`;
+
+  const grid = document.getElementById("color-grid");
+  cards.forEach(color => {
+    const div = document.createElement("div");
+    div.className = "bg-gray-300 h-20 rounded cursor-pointer";
+    div.dataset.color = color;
+    div.addEventListener("click", () => flipColor(div));
+    grid.appendChild(div);
+  });
+
+  function flipColor(div) {
+    if (selected.length < 2 && !div.classList.contains("matched")) {
+      div.style.backgroundColor = div.dataset.color;
+      selected.push(div);
+      if (selected.length === 2) {
+        setTimeout(checkColorMatch, 800);
+      }
+    }
+  }
+
+  function checkColorMatch() {
+    if (selected[0].dataset.color === selected[1].dataset.color) {
+      selected.forEach(el => el.classList.add("matched"));
+    } else {
+      selected.forEach(el => (el.style.backgroundColor = "gray"));
+    }
+    selected = [];
+  }
 }
 
-function loadNumberQuizGame() {
-  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-2">Number Quiz!</h3><p>Coming soon...</p>`;
+// ---------- Game 3: Number Quiz ----------
+function startNumberQuiz() {
+  let score = 0;
+  let question = 1;
+
+  function generateQuestion() {
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    const correct = a + b;
+
+    gameContent.innerHTML = `
+      <h3 class="text-xl font-bold mb-4">Number Quiz</h3>
+      <p class="mb-2">Question ${question}: What is ${a} + ${b}?</p>
+      <input type="number" id="answer" class="border p-2 rounded w-24"/>
+      <button id="submit-answer" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Submit</button>
+      <p class="mt-4">Score: ${score}</p>
+    `;
+
+    document.getElementById("submit-answer").addEventListener("click", () => {
+      const userAns = parseInt(document.getElementById("answer").value, 10);
+      if (userAns === correct) {
+        score++;
+        alert("Correct!");
+      } else {
+        alert("Oops! The answer was " + correct);
+      }
+      question++;
+      generateQuestion();
+    });
+  }
+
+  generateQuestion();
 }
+
 
 // ------------------ Init ------------------
 async function init() {
