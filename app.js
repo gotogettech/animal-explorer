@@ -1,4 +1,4 @@
-// Ultimate Animal Explorer - Modern & Animated
+// Little Genius Explorer - Modern & Animated
 
 async function loadJSON(path) {
   const res = await fetch(path);
