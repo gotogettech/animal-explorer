@@ -15,7 +15,7 @@
       Little Genius Explorer
     </h1>
     <p class="text-gray-600 mt-2 text-lg">
-      Learn animals, numbers, letters, Shapes and Clours with fun sounds!
+      Learn Animals, Numbers, Letters, Shapes, Colors & Games with Fun Sounds!
     </p>
   </header>
 
@@ -26,9 +26,9 @@
     <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-en">English Letters</button>
     <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-te">Telugu Letters</button>
     <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-hi">Hindi Letters</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="shapes">Shapes</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="colors">Colors</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="games">Games</button>
+    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="shapes">Shapes</button>
+    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="colors">Colors</button>
+    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="games">Games</button>
   </nav>
 
   <main class="p-6">
@@ -90,14 +90,21 @@
 
     <!-- Shapes Section -->
     <div id="content-shapes" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4">Learn Shapes</h2>
+      <h2 class="text-2xl font-bold text-center mb-4 text-indigo-600">Learn Shapes</h2>
       <div id="shapes-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
     </div>
     
     <!-- Colors Section -->
     <div id="content-colors" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4">Learn Colors</h2>
+      <h2 class="text-2xl font-bold text-center mb-4 text-teal-600">Learn Colors</h2>
       <div id="colors-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
+    </div>
+
+    <!-- Games Section -->
+    <div id="content-games" class="hidden">
+      <h2 class="text-2xl font-bold text-center mb-4 text-red-600">Fun Games</h2>
+      <p class="text-center text-gray-700">Coming soon: Memory games, puzzles, and interactive quizzes!</p>
+      <div id="games-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4"></div>
     </div>
   </main>
 
