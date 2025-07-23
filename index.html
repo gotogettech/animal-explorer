@@ -4,115 +4,128 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Little Genius Explorer</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (if needed) -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/6e25c1b14e.js" crossorigin="anonymous"></script>
+
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gradient-to-r from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans">
+<body>
 
   <!-- Header -->
-  <header class="text-center p-6 bg-white shadow-md rounded-b-2xl">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 drop-shadow-lg animate-bounce">
-      Little Genius Explorer
+  <header class="text-center p-6">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 drop-shadow-lg">
+      <i class="fas fa-graduation-cap"></i> Little Genius Explorer
     </h1>
-    <p class="text-gray-600 mt-2 text-lg">
+    <p class="text-gray-700 mt-2 text-lg font-medium">
       Learn Animals, Numbers, Letters, Shapes, Colors & Fun Games!
     </p>
   </header>
 
   <!-- Navigation Tabs -->
-  <nav id="tabs" class="flex flex-wrap justify-center gap-4 p-4 bg-gradient-to-r from-blue-100 to-pink-100 rounded-b-xl">
-    <button class="tab-btn active bg-blue-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="animals">Animals</button>
-    <button class="tab-btn bg-green-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="numbers">Numbers</button>
-    <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-en">English Letters</button>
-    <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-te">Telugu Letters</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-hi">Hindi Letters</button>
-    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="shapes">Shapes</button>
-    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="colors">Colors</button>
-    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="games">Games</button>
+  <nav id="tabs" class="flex flex-wrap justify-center gap-4 p-4">
+    <button class="tab-btn active" data-tab="animals"><i class="fas fa-paw"></i> Animals</button>
+    <button class="tab-btn" data-tab="numbers"><i class="fas fa-sort-numeric-up"></i> Numbers</button>
+    <button class="tab-btn" data-tab="letters-en"><i class="fas fa-font"></i> English Letters</button>
+    <button class="tab-btn" data-tab="letters-te"><i class="fas fa-language"></i> Telugu Letters</button>
+    <button class="tab-btn" data-tab="letters-hi"><i class="fas fa-language"></i> Hindi Letters</button>
+    <button class="tab-btn" data-tab="shapes"><i class="fas fa-shapes"></i> Shapes</button>
+    <button class="tab-btn" data-tab="colors"><i class="fas fa-palette"></i> Colors</button>
+    <button class="tab-btn" data-tab="games"><i class="fas fa-gamepad"></i> Games</button>
   </nav>
 
   <main class="p-6">
-    <!-- Search bar (Only for Animals) -->
+    <!-- Search bar (Animals) -->
     <div id="search-section" class="mb-4">
-      <input type="text" id="search-input" placeholder="Search animals..."
-        class="p-3 border border-gray-300 rounded w-full shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input type="text" id="search-input" placeholder="Search animals..."/>
     </div>
 
     <!-- Animal Content -->
-    <div id="content-animals" class="active">
-      <div id="animal-category-filters" class="flex flex-wrap gap-2 mb-4">
-        <button class="cat-button active bg-blue-400 text-white px-3 py-1 rounded shadow hover:bg-blue-500" data-cat="All">All</button>
-        <button class="cat-button bg-pink-400 text-white px-3 py-1 rounded shadow hover:bg-pink-500" data-cat="Mammal">Mammals</button>
-        <button class="cat-button bg-yellow-400 text-white px-3 py-1 rounded shadow hover:bg-yellow-500" data-cat="Bird">Birds</button>
-        <button class="cat-button bg-green-400 text-white px-3 py-1 rounded shadow hover:bg-green-500" data-cat="Reptile">Reptiles</button>
-        <button class="cat-button bg-purple-400 text-white px-3 py-1 rounded shadow hover:bg-purple-500" data-cat="Aquatic">Aquatic</button>
-        <button class="cat-button bg-red-400 text-white px-3 py-1 rounded shadow hover:bg-red-500" data-cat="Amphibian">Amphibians</button>
+    <section id="content-animals" class="active">
+      <!-- Filters -->
+      <div id="animal-category-filters" class="flex flex-wrap gap-2 mb-4 justify-center">
+        <button class="cat-button active" data-cat="All">All</button>
+        <button class="cat-button" data-cat="Mammal">Mammals</button>
+        <button class="cat-button" data-cat="Bird">Birds</button>
+        <button class="cat-button" data-cat="Reptile">Reptiles</button>
+        <button class="cat-button" data-cat="Aquatic">Aquatic</button>
+        <button class="cat-button" data-cat="Amphibian">Amphibians</button>
       </div>
+
+      <!-- Animal Grid -->
       <div id="animal-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
 
-      <div id="animal-detail" class="hidden text-center bg-white p-6 rounded-xl shadow-lg mt-4">
-        <img id="animal-img" class="mx-auto w-48 h-48 object-contain rounded shadow-md" />
+      <!-- Animal Detail -->
+      <div id="animal-detail" class="hidden text-center mt-4">
+        <img id="animal-img" class="mx-auto w-48 h-48 object-contain rounded shadow-md" alt="Animal" />
         <h2 id="animal-name" class="text-2xl font-bold mt-4 text-blue-600"></h2>
         <p id="animal-fact" class="text-gray-700 mt-2"></p>
         <div class="mt-4 flex justify-center gap-4">
-          <button id="animal-sound-btn" class="btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Play Sound</button>
-          <button id="animal-speak-btn" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Speak</button>
+          <button id="animal-sound-btn"><i class="fas fa-volume-up"></i> Play Sound</button>
+          <button id="animal-speak-btn"><i class="fas fa-microphone"></i> Speak</button>
         </div>
-        <button id="animal-back" class="mt-6 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Back</button>
+        <button id="animal-back" class="mt-6"><i class="fas fa-arrow-left"></i> Back</button>
       </div>
-    </div>
+    </section>
 
     <!-- Numbers Content -->
-    <div id="content-numbers" class="hidden">
+    <section id="content-numbers" class="hidden">
       <div class="number-controls mb-4 flex gap-2 items-center justify-center">
-        <input type="number" id="num-start" value="0" min="0" max="1000" class="p-2 border rounded w-20" />
-        <input type="number" id="num-end" value="20" min="0" max="1000" class="p-2 border rounded w-20" />
-        <button id="numbers-generate" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Show Numbers</button>
+        <input type="number" id="num-start" value="0" min="0" max="1000" />
+        <input type="number" id="num-end" value="20" min="0" max="1000" />
+        <button id="numbers-generate"><i class="fas fa-eye"></i> Show Numbers</button>
       </div>
       <div id="numbers-grid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-10 gap-4 p-4"></div>
-    </div>
+    </section>
 
     <!-- Letters Content -->
-    <div id="content-letters-en" class="hidden">
+    <section id="content-letters-en" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-blue-600">English Letters</h2>
       <div id="letters-en-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
-    </div>
+    </section>
 
-    <div id="content-letters-te" class="hidden">
+    <section id="content-letters-te" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-pink-600">తెలుగు అక్షరాలు</h2>
       <div id="letters-te-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
-    </div>
+    </section>
 
-    <div id="content-letters-hi" class="hidden">
+    <section id="content-letters-hi" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-yellow-600">हिंदी अक्षर</h2>
       <div id="letters-hi-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
-    </div>
+    </section>
 
     <!-- Shapes Section -->
-    <div id="content-shapes" class="hidden">
+    <section id="content-shapes" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-indigo-600">Learn Shapes</h2>
       <div id="shapes-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
-    </div>
+    </section>
 
     <!-- Colors Section -->
-    <div id="content-colors" class="hidden">
+    <section id="content-colors" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-teal-600">Learn Colors</h2>
       <div id="colors-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
-    </div>
+    </section>
 
     <!-- Games Section -->
-    <div id="content-games" class="hidden">
+    <section id="content-games" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-red-600">Fun Games</h2>
       <div class="games-menu grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <button class="game-btn bg-indigo-400 text-white rounded-lg p-6 shadow hover:scale-105" onclick="startGame('shape')">Shape Finding</button>
-        <button class="game-btn bg-teal-400 text-white rounded-lg p-6 shadow hover:scale-105" onclick="startGame('color')">Color Finding</button>
-        <button class="game-btn bg-yellow-400 text-white rounded-lg p-6 shadow hover:scale-105" onclick="startGame('number')">Number Finding</button>
+        <button class="game-btn" onclick="startGame('shape')"><i class="fas fa-dice"></i> Shape Finding</button>
+        <button class="game-btn" onclick="startGame('color')"><i class="fas fa-palette"></i> Color Finding</button>
+        <button class="game-btn" onclick="startGame('number')"><i class="fas fa-hashtag"></i> Number Finding</button>
       </div>
-      <div id="game-area" class="hidden p-4 bg-white rounded-xl shadow-lg">
-        <button id="back-to-menu" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back to Menu</button>
+      <div id="game-area" class="hidden p-4">
+        <button id="back-to-menu"><i class="fas fa-arrow-left"></i> Back to Menu</button>
         <div id="game-content" class="mt-4"></div>
       </div>
-    </div>
+    </section>
   </main>
 
   <script src="app.js"></script>
