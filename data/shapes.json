@@ -6,4 +6,12 @@
   { "name": "Star", "color": "#FFB830", "icon": "⭐", "sound": "sounds/star.mp3" },
   { "name": "Heart", "color": "#FF4C61", "icon": "❤", "sound": "sounds/heart.mp3" },
   { "name": "Oval", "color": "#9B59B6", "icon": "⬯", "sound": "sounds/oval.mp3" }
+  { "name": "Pentagon","color": "#f472b6", "icon": "assets/shapes/pentagon.svg","sound": "sounds/shapes/pentagon.mp3" },
+  { "name": "Hexagon","color": "#f59e0b", "icon": "assets/shapes/hexagon.svg","sound": "sounds/shapes/hexagon.mp3" },
+  { "name": "Octagon","color": "#10b981", "icon": "assets/shapes/octagon.svg","sound": "sounds/shapes/octagon.mp3" },
+  { "name": "Diamond","color": "#3b82f6", "icon": "assets/shapes/diamond.svg","sound": "sounds/shapes/diamond.mp3" },
+  { "name": "Parallelogram", "color": "#ec4899", "icon": "assets/shapes/parallelogram.svg", "sound": "sounds/shapes/parallelogram.mp3" },
+  { "name": "Trapezoid","color": "#8b5cf6", "icon": "assets/shapes/trapezoid.svg","sound": "sounds/shapes/trapezoid.mp3" },
+  { "name": "Crescent","color": "#14b8a6", "icon": "assets/shapes/crescent.svg","sound": "sounds/shapes/crescent.mp3" },
+  { "name": "Arrow","color": "#eab308", "icon": "assets/shapes/arrow.svg","sound": "sounds/shapes/arrow.mp3" }
 ]
