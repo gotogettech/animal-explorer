@@ -52,12 +52,9 @@ const contents = {
 const searchSection = document.getElementById('search-section');
 
 function toggleSection(tab) {
-  for (const k in contents) {
-    contents[k].classList.add('hidden');
-  }
+  Object.values(contents).forEach(el => el.classList.add('hidden'));
   contents[tab].classList.remove('hidden');
-  if (tab === 'animals') searchSection.classList.remove('hidden');
-  else searchSection.classList.add('hidden');
+  searchSection.style.display = (tab === 'animals') ? 'block' : 'none';
 }
 
 tabs.forEach(btn => {
@@ -77,15 +74,13 @@ const animalImg = document.getElementById('animal-img');
 const animalName = document.getElementById('animal-name');
 const animalFact = document.getElementById('animal-fact');
 const animalBack = document.getElementById('animal-back');
-const animalSoundBtn = document.getElementById('animal-sound-btn');
-const animalSpeakBtn = document.getElementById('animal-speak-btn');
 const searchInput = document.getElementById('search-input');
 
 function renderAnimalGrid(list) {
   animalGrid.innerHTML = '';
   list.forEach(an => {
     const card = document.createElement('div');
-    card.className = 'animal-card';
+    card.className = 'animal-card bg-white rounded-lg p-2 shadow cursor-pointer hover:scale-105 transition';
     card.innerHTML = `
       <img src="${an.image}" alt="${an.name}" class="rounded-xl w-full h-32 object-contain" />
       <p class="text-center text-lg font-bold mt-2">${an.name}</p>
@@ -97,18 +92,16 @@ function renderAnimalGrid(list) {
 
 function showAnimal(an) {
   animalGrid.style.display = 'none';
-  document.getElementById('animal-category-filters').style.display = 'none';
   animalDetail.classList.remove('hidden');
   animalImg.src = an.image;
   animalName.textContent = an.name;
   animalFact.textContent = an.fact;
-  new Audio(an.sound).play();
+  if (an.sound) new Audio(an.sound).play();
 }
 
 animalBack.addEventListener('click', () => {
   animalDetail.classList.add('hidden');
   animalGrid.style.display = '';
-  document.getElementById('animal-category-filters').style.display = '';
 });
 
 searchInput.addEventListener('input', () => {
@@ -126,8 +119,8 @@ function renderNumbers(start, end) {
   numbersGrid.innerHTML = '';
   for (let i = start; i <= end; i++) {
     const div = document.createElement('div');
-    div.className = 'number-card';
-    div.innerHTML = `<span>${i}</span><p>${numberToWords(i)}</p>`;
+    div.className = 'number-card bg-blue-100 rounded p-3 text-center cursor-pointer hover:scale-105 transition';
+    div.innerHTML = `<span class="text-xl font-bold">${i}</span><p>${numberToWords(i)}</p>`;
     div.addEventListener('click', () => speak(numberToWords(i)));
     numbersGrid.appendChild(div);
   }
@@ -142,7 +135,7 @@ async function renderLetters(path, gridEl, lang) {
   gridEl.innerHTML = '';
   letters.forEach(l => {
     const div = document.createElement('div');
-    div.className = 'letter-card';
+    div.className = 'letter-card bg-yellow-100 rounded p-4 text-center text-2xl font-bold cursor-pointer hover:scale-105 transition';
     div.textContent = l.char;
     div.addEventListener('click', () => l.sound ? new Audio(l.sound).play() : speak(l.char, lang));
     gridEl.appendChild(div);
@@ -156,9 +149,9 @@ async function renderShapes() {
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
-    div.className = 'shape-card';
+    div.className = 'shape-card bg-white p-4 rounded shadow text-center cursor-pointer hover:scale-105 transition';
     div.innerHTML = `<img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
-                     <p>${shape.name}</p>`;
+                     <p class="font-bold">${shape.name}</p>`;
     shapesGrid.appendChild(div);
   });
 }
@@ -170,9 +163,9 @@ async function renderColors() {
   colorsGrid.innerHTML = '';
   colors.forEach(color => {
     const div = document.createElement('div');
-    div.className = 'color-card';
+    div.className = 'color-card p-6 rounded shadow text-center cursor-pointer hover:scale-105 transition';
     div.style.backgroundColor = color.color;
-    div.innerHTML = `<p style="color:${readableTextColor(color.color)}">${color.name}</p>`;
+    div.innerHTML = `<p style="color:${readableTextColor(color.color)}" class="font-bold">${color.name}</p>`;
     colorsGrid.appendChild(div);
   });
 }
@@ -182,9 +175,12 @@ let currentGame = null;
 let currentQuestion = 0;
 let score = 0;
 let playerName = '';
-
 const gameContent = document.getElementById('game-content');
 const backToMenu = document.getElementById('back-to-menu');
+
+document.querySelectorAll('.game-btn').forEach(btn => {
+  btn.addEventListener('click', () => startGame(btn.dataset.game));
+});
 
 function startGame(type) {
   currentGame = type;
@@ -210,23 +206,30 @@ function nextQuestion() {
 }
 
 function renderShapeQuestion() {
-  gameContent.innerHTML += `<p class="mb-2">Find this shape:</p>`;
-  // Implementation: random shape
+  gameContent.innerHTML += `<p class="mb-2">Which of these is a Circle?</p>`;
+  // Placeholder for shape quiz
 }
 
 function renderColorQuestion() {
-  gameContent.innerHTML += `<p class="mb-2">Find this color:</p>`;
-  // Implementation: random color
+  gameContent.innerHTML += `<p class="mb-2">Click on Blue color</p>`;
+  // Placeholder for color quiz
 }
 
 function renderNumberQuestion() {
   const num = Math.floor(Math.random() * 10);
   gameContent.innerHTML += `<p class="mb-2">Which number is "${numberToWords(num)}"?</p>`;
-  // Implementation: random numbers
+  // Placeholder for number quiz
 }
 
 function endGame() {
   generateCertificate(playerName, score);
+  resetGame();
+}
+
+function resetGame() {
+  playerName = '';
+  currentQuestion = 0;
+  score = 0;
 }
 
 backToMenu.addEventListener('click', () => {
@@ -238,11 +241,13 @@ backToMenu.addEventListener('click', () => {
 function generateCertificate(name, score) {
   const certWindow = window.open('', '_blank');
   certWindow.document.write(`
-    <html><head><title>Certificate</title></head><body style="text-align:center; font-family:sans-serif;">
-    <h1 style="color:#2b6cb0;">Little Genius Explorer Certificate</h1>
-    <p>Congratulations, <strong>${name}</strong>!</p>
-    <p>You scored <strong>${score}/10</strong> in the ${currentGame} game.</p>
-    <p>Keep Learning & Exploring!</p>
+    <html><head><title>Certificate</title></head>
+    <body style="text-align:center; font-family:sans-serif; background:#fef3c7; padding:50px;">
+      <h1 style="color:#2b6cb0;">Little Genius Explorer Certificate</h1>
+      <p>Congratulations, <strong>${name}</strong>!</p>
+      <p>You scored <strong>${score}/10</strong> in the ${currentGame} game.</p>
+      <p>Keep Learning & Exploring!</p>
+      <button onclick="window.print()" style="margin-top:20px; padding:10px 20px; background:#4caf50; color:#fff; border:none; border-radius:5px; cursor:pointer;">Download Certificate</button>
     </body></html>
   `);
 }
