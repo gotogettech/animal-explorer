@@ -181,6 +181,43 @@ async function renderLetters(path, gridEl, lang) {
   });
 }
 
+// ===============SHAPES================
+async function renderShapes() {
+  const shapes = await loadJSON('data/shapes.json');
+  const shapesGrid = document.getElementById('shapes-grid');
+  shapesGrid.innerHTML = '';
+  shapes.forEach(shape => {
+    const div = document.createElement('div');
+    div.className = 'shape-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
+    div.style.backgroundColor = shape.color;
+    div.innerHTML = `<p class="font-bold text-white text-lg">${shape.name}</p>`;
+    div.addEventListener('click', () => {
+      const audio = new Audio(shape.sound);
+      audio.play();
+      speak(shape.name, 'en-IN');
+    });
+    shapesGrid.appendChild(div);
+  });
+}
+
+// =========COLORS===========
+async function renderColors() {
+  const colors = await loadJSON('data/colors.json');
+  const colorsGrid = document.getElementById('colors-grid');
+  colorsGrid.innerHTML = '';
+  colors.forEach(color => {
+    const div = document.createElement('div');
+    div.className = 'color-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
+    div.style.backgroundColor = color.color;
+    div.innerHTML = `<p class="font-bold text-white text-lg">${color.name}</p>`;
+    div.addEventListener('click', () => {
+      const audio = new Audio(color.sound);
+      audio.play();
+      speak(color.name, 'en-IN');
+    });
+    colorsGrid.appendChild(div);
+  });
+}
 // ================= INIT =================
 async function init() {
   animalsData = await loadJSON('data/animals.json');
@@ -190,6 +227,8 @@ async function init() {
   await renderLetters('data/letters_english.json', document.getElementById('letters-en-grid'), 'en-IN');
   await renderLetters('data/letters_telugu.json', document.getElementById('letters-te-grid'), 'te-IN');
   await renderLetters('data/letters_hindi.json', document.getElementById('letters-hi-grid'), 'hi-IN');
+  await renderShapes();
+  await renderColors();
 }
 
 window.addEventListener('load', () => {
