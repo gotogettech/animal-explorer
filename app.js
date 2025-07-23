@@ -238,8 +238,8 @@ async function renderShapes() {
       div.style.border = `5px solid ${shape.color}`;
 
       div.innerHTML = `
-        <div class="text-6xl mb-2" style="color:${shape.color};">${shape.icon}</div>
-        <p class="font-extrabold text-xl" style="color:${shape.color};">${shape.name}</p>
+        <img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
+        <p class="font-bold text-lg" style="color:${shape.color};">${shape.name}</p>
       `;
 
       div.addEventListener('click', () => {
