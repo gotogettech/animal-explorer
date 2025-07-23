@@ -222,39 +222,29 @@ async function renderLetters(path, gridEl, lang) {
 
 // ------------------ Shapes ------------------
 async function renderShapes() {
-  try {
-    const shapes = await loadJSON('data/shapes.json');
-    const shapesGrid = document.getElementById('shapes-grid');
-    shapesGrid.innerHTML = '';
-
-    shapes.forEach(shape => {
-      const div = document.createElement('div');
-      div.className = `
-        shape-card flex flex-col items-center justify-center 
-        p-6 rounded-2xl shadow-xl cursor-pointer transform 
-        transition hover:scale-110 hover:rotate-2 
-        bg-gradient-to-br from-white to-gray-100
-      `;
-      div.style.border = `5px solid ${shape.color}`;
-
-      div.innerHTML = `
-        <div class="text-6xl mb-2" style="color:${shape.color};">${shape.icon}</div>
-        <p class="font-extrabold text-xl" style="color:${shape.color};">${shape.name}</p>
-      `;
-
-      div.addEventListener('click', () => {
-        if (shape.sound) {
-          const audio = new Audio(shape.sound);
-          audio.play();
-        }
-        speak(shape.name, 'en-IN');
-      });
-
-      shapesGrid.appendChild(div);
-    });
-  } catch (err) {
-    console.error('Error loading shapes:', err);
+  const shapes = await loadJSON('data/shapes.json');
+  const shapesGrid = document.getElementById('shapes-grid');
+  if (!shapesGrid) {
+    console.warn("No shapes grid found in DOM.");
+    return;
   }
+  shapesGrid.innerHTML = '';
+  shapes.forEach(shape => {
+    const div = document.createElement('div');
+    div.className = 'shape-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
+    div.style.backgroundColor = shape.color;
+    const fg = readableTextColor(shape.color);
+    div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${shape.name}</p>`;
+    div.addEventListener('click', () => {
+      if (shape.sound) {
+        new Audio(shape.sound).play().catch(()=>speak(shape.name,'en-IN'));
+      } else {
+        speak(shape.name, 'en-IN');
+      }
+    });
+    shapesGrid.appendChild(div);
+  });
+  console.log("Rendered shapes:", shapes.length);
 }
 
 // ------------------ Colors ------------------
