@@ -108,6 +108,23 @@
     </div>
   </main>
 
+  <!-- Games Section -->
+  <div id="content-games" class="hidden">
+    <h2 class="text-2xl font-bold text-center mb-4 text-red-600">Fun Games</h2>
+    
+    <div class="games-menu grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <button class="game-btn bg-blue-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="shape-match">Shape Matching</button>
+      <button class="game-btn bg-green-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="color-memory">Color Memory</button>
+      <button class="game-btn bg-yellow-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="number-quiz">Number Quiz</button>
+    </div>
+    
+    <div id="game-area" class="mt-6 hidden p-4 bg-white rounded-xl shadow-lg">
+      <button id="back-to-menu" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back to Menu</button>
+      <div id="game-content" class="mt-4"></div>
+    </div>
+  </div>
+
+
   <script src="app.js"></script>
 </body>
 </html>
