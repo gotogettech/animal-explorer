@@ -8,10 +8,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="bg-gradient-to-r from-pink-200 via-yellow-100 to-blue-200 min-h-screen font-sans">
-
   <!-- Header -->
   <header class="text-center p-6 bg-white shadow-md rounded-b-2xl">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 drop-shadow-lg">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 drop-shadow-lg animate-bounce">
       Little Genius Explorer
     </h1>
     <p class="text-gray-600 mt-2 text-lg">
@@ -21,108 +20,83 @@
 
   <!-- Navigation Tabs -->
   <nav id="tabs" class="flex flex-wrap justify-center gap-4 p-4 bg-gradient-to-r from-blue-100 to-pink-100 rounded-b-xl">
-    <button class="tab-btn active bg-blue-500 text-white px-4 py-2 rounded-xl shadow" data-tab="animals">Animals</button>
-    <button class="tab-btn bg-green-500 text-white px-4 py-2 rounded-xl shadow" data-tab="numbers">Numbers</button>
-    <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl shadow" data-tab="letters-en">English Letters</button>
-    <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl shadow" data-tab="letters-te">Telugu Letters</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow" data-tab="letters-hi">Hindi Letters</button>
-    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl shadow" data-tab="shapes">Shapes</button>
-    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl shadow" data-tab="colors">Colors</button>
-    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl shadow" data-tab="games">Games</button>
+    <button class="tab-btn active bg-blue-500 text-white px-4 py-2 rounded-xl" data-tab="animals">Animals</button>
+    <button class="tab-btn bg-green-500 text-white px-4 py-2 rounded-xl" data-tab="numbers">Numbers</button>
+    <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl" data-tab="letters-en">English Letters</button>
+    <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl" data-tab="letters-te">Telugu Letters</button>
+    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl" data-tab="letters-hi">Hindi Letters</button>
+    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl" data-tab="shapes">Shapes</button>
+    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl" data-tab="colors">Colors</button>
+    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl" data-tab="games">Games</button>
   </nav>
 
   <main class="p-6">
-    <!-- Search bar (only for Animals tab) -->
+    <!-- Search bar -->
     <div id="search-section" class="mb-4">
-      <input type="text" id="search-input" placeholder="Search animals..."
-        class="p-3 border border-gray-300 rounded w-full shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input type="text" id="search-input" placeholder="Search animals..." class="p-3 border rounded w-full shadow" />
     </div>
 
     <!-- Animal Content -->
     <div id="content-animals" class="active">
-      <div id="animal-category-filters" class="flex flex-wrap gap-2 mb-4">
-        <button class="cat-button active bg-blue-400 text-white px-3 py-1 rounded shadow" data-cat="All">All</button>
-        <button class="cat-button bg-pink-400 text-white px-3 py-1 rounded shadow" data-cat="Mammal">Mammals</button>
-        <button class="cat-button bg-yellow-400 text-white px-3 py-1 rounded shadow" data-cat="Bird">Birds</button>
-        <button class="cat-button bg-green-400 text-white px-3 py-1 rounded shadow" data-cat="Reptile">Reptiles</button>
-        <button class="cat-button bg-purple-400 text-white px-3 py-1 rounded shadow" data-cat="Aquatic">Aquatic</button>
-        <button class="cat-button bg-red-400 text-white px-3 py-1 rounded shadow" data-cat="Amphibian">Amphibians</button>
-      </div>
       <div id="animal-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
-
-      <div id="animal-detail" class="hidden text-center bg-white p-6 rounded-xl shadow-lg mt-4">
-        <img id="animal-img" class="mx-auto w-48 h-48 object-contain rounded shadow-md" />
-        <h2 id="animal-name" class="text-2xl font-bold mt-4 text-blue-600"></h2>
-        <p id="animal-fact" class="text-gray-700 mt-2"></p>
-        <div class="mt-4 flex justify-center gap-4">
-          <button id="animal-sound-btn" class="bg-green-500 text-white px-4 py-2 rounded">Play Sound</button>
-          <button id="animal-speak-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Speak</button>
-        </div>
-        <button id="animal-back" class="mt-6 bg-gray-400 text-white px-4 py-2 rounded">Back</button>
+      <div id="animal-detail" class="hidden text-center p-4 bg-white rounded-lg shadow">
+        <img id="animal-img" class="mx-auto w-40 h-40 object-contain rounded" />
+        <h2 id="animal-name" class="text-2xl font-bold mt-2"></h2>
+        <p id="animal-fact" class="mt-2 text-gray-700"></p>
+        <button id="animal-back" class="mt-4 bg-gray-400 text-white px-4 py-2 rounded">Back</button>
       </div>
     </div>
 
     <!-- Numbers Content -->
     <div id="content-numbers" class="hidden">
-      <div class="number-controls mb-4 flex gap-2 items-center justify-center">
-        <input type="number" id="num-start" value="0" min="0" max="1000" class="p-2 border rounded w-20" />
-        <input type="number" id="num-end" value="20" min="0" max="1000" class="p-2 border rounded w-20" />
+      <div class="mb-4 flex gap-2">
+        <input type="number" id="num-start" value="0" class="p-2 border rounded w-20" />
+        <input type="number" id="num-end" value="20" class="p-2 border rounded w-20" />
         <button id="numbers-generate" class="bg-blue-500 text-white px-4 py-2 rounded">Show Numbers</button>
       </div>
-      <div id="numbers-grid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-10 gap-4 p-4"></div>
+      <div id="numbers-grid" class="grid grid-cols-3 md:grid-cols-10 gap-2"></div>
     </div>
 
     <!-- Letters Content -->
     <div id="content-letters-en" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-blue-600">English Letters</h2>
-      <div id="letters-en-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
+      <h2 class="text-center text-xl font-bold mb-2">English Letters</h2>
+      <div id="letters-en-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
     </div>
-
     <div id="content-letters-te" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-pink-600">తెలుగు అక్షరాలు</h2>
-      <div id="letters-te-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
+      <h2 class="text-center text-xl font-bold mb-2">Telugu Letters</h2>
+      <div id="letters-te-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
     </div>
-
     <div id="content-letters-hi" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-yellow-600">हिंदी अक्षर</h2>
-      <div id="letters-hi-grid" class="grid grid-cols-6 md:grid-cols-10 gap-4 p-4"></div>
+      <h2 class="text-center text-xl font-bold mb-2">Hindi Letters</h2>
+      <div id="letters-hi-grid" class="grid grid-cols-6 md:grid-cols-10 gap-2"></div>
     </div>
 
-    <!-- Shapes Section -->
+    <!-- Shapes -->
     <div id="content-shapes" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-indigo-600">Learn Shapes</h2>
-      <div id="shapes-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
+      <h2 class="text-center text-xl font-bold mb-2">Learn Shapes</h2>
+      <div id="shapes-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4"></div>
     </div>
 
-    <!-- Colors Section -->
+    <!-- Colors -->
     <div id="content-colors" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-teal-600">Learn Colors</h2>
-      <div id="colors-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4 p-4"></div>
+      <h2 class="text-center text-xl font-bold mb-2">Learn Colors</h2>
+      <div id="colors-grid" class="grid grid-cols-3 md:grid-cols-5 gap-4"></div>
     </div>
 
-    <!-- Games Section -->
+    <!-- Games -->
     <div id="content-games" class="hidden">
-      <h2 class="text-2xl font-bold text-center mb-4 text-red-600">Fun Games</h2>
-      <div class="text-center mb-4">
-        <input type="text" id="player-name" placeholder="Enter your name" class="p-2 border rounded w-60 shadow" />
-        <button id="start-game" class="bg-green-500 text-white px-4 py-2 rounded">Start Game</button>
+      <h2 class="text-center text-xl font-bold mb-2">Fun Games</h2>
+      <div class="games-menu grid grid-cols-1 md:grid-cols-3 gap-4">
+        <button class="game-btn bg-blue-400 text-white p-4 rounded" data-game="shape">Shape Game</button>
+        <button class="game-btn bg-green-400 text-white p-4 rounded" data-game="color">Color Game</button>
+        <button class="game-btn bg-yellow-400 text-white p-4 rounded" data-game="number">Number Game</button>
       </div>
-      <div id="game-area" class="hidden bg-white p-4 rounded shadow-lg">
-        <div id="game-question" class="text-lg font-bold text-center mb-4"></div>
-        <div id="game-options" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-        <div class="text-center mt-4">
-          <button id="next-question" class="bg-blue-500 text-white px-4 py-2 rounded hidden">Next</button>
-        </div>
-      </div>
-      <div id="game-result" class="hidden text-center bg-green-100 p-6 rounded shadow mt-4">
-        <h3 class="text-xl font-bold">Game Completed!</h3>
-        <p id="score-display" class="mt-2"></p>
-        <button id="download-certificate" class="bg-indigo-500 text-white px-4 py-2 rounded mt-4">Download Certificate</button>
+      <div id="game-area" class="hidden mt-4 bg-white p-4 rounded shadow">
+        <div id="game-content"></div>
+        <button id="back-to-menu" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">Back</button>
       </div>
     </div>
   </main>
-
-  <canvas id="certificateCanvas" class="hidden"></canvas>
 
   <script src="app.js"></script>
 </body>
