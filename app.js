@@ -285,7 +285,7 @@ async function init() {
   await renderLetters('data/letters_hindi.json', document.getElementById('letters-hi-grid'), 'hi-IN');
   await renderShapes();
   await renderColors();
-  console.log("Init complete.");
+  //console.log("Init complete.");
 }
 
 window.addEventListener('load', () => {
