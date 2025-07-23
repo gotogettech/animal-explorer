@@ -1,63 +1,102 @@
-// Little Genius Explorer - Modern & Animated
+// Little Genius Explorer - Modern & Animated (Shapes + Colors Fix)
 
+// ------------------ Utilities ------------------
 async function loadJSON(path) {
-  const res = await fetch(path);
-  if (!res.ok) throw new Error(`Failed to load ${path}`);
-  return res.json();
+  try {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`);
+    return await res.json();
+  } catch (err) {
+    console.error("loadJSON error:", err);
+    return []; // fail-safe: return empty so UI doesn't crash
+  }
 }
 
 // Number to English words 0-1000
 function numberToWords(num) {
-  const ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-  const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const ones = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+  const teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
   if (num < 10) return ones[num];
-  if (num < 20) return teens[num - 10];
+  if (num < 20) return teens[num-10];
   if (num < 100) {
-    const t = Math.floor(num / 10), o = num % 10;
-    return tens[t] + (o ? '-' + ones[o] : '');
+    const t = Math.floor(num/10), o = num%10;
+    return tens[t] + (o?'-'+ones[o]:'');
   }
   if (num < 1000) {
-    const h = Math.floor(num / 100), r = num % 100;
-    return r === 0 ? ones[h] + ' hundred' : ones[h] + ' hundred ' + numberToWords(r);
+    const h = Math.floor(num/100), r = num%100;
+    return r===0 ? ones[h]+' hundred' : ones[h]+' hundred '+numberToWords(r);
   }
   if (num === 1000) return 'one thousand';
   return String(num);
 }
 
-function speak(text, lang = 'en-IN') {
+// Speech synthesis fallback
+function speak(text, lang='en-IN') {
   if (!window.speechSynthesis) { alert('Speech not supported'); return; }
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = lang;
   const voices = speechSynthesis.getVoices();
-  const match = voices.find(v => v.lang === lang) || voices.find(v => v.lang.startsWith(lang.split('-')[0])) || voices[0];
+  const match = voices.find(v=>v.lang===lang) || voices.find(v=>v.lang.startsWith(lang.split('-')[0])) || voices[0];
   if (match) utt.voice = match;
   speechSynthesis.speak(utt);
 }
 
+// Pick readable text color (black/white) over a background
+function readableTextColor(hex) {
+  // strip #
+  const h = hex.replace('#','');
+  let r,g,b;
+  if (h.length === 3) {
+    r = parseInt(h[0]+h[0],16);
+    g = parseInt(h[1]+h[1],16);
+    b = parseInt(h[2]+h[2],16);
+  } else {
+    r = parseInt(h.slice(0,2),16);
+    g = parseInt(h.slice(2,4),16);
+    b = parseInt(h.slice(4,6),16);
+  }
+  // luminance
+  const l = (0.299*r + 0.587*g + 0.114*b)/255;
+  return l > 0.6 ? '#111827' : '#FFFFFF'; // dark text on light bg, white on dark
+}
+
+// ------------------ Global State ------------------
 let animalsData = [];
 let filteredAnimals = [];
 let currentAnimal = null;
 let currentAnimalAudio = null;
 
-// Tabs
+// ------------------ Tabs ------------------
 const tabs = document.querySelectorAll('#tabs button');
 const contents = {
   animals: document.getElementById('content-animals'),
   numbers: document.getElementById('content-numbers'),
   'letters-en': document.getElementById('content-letters-en'),
   'letters-te': document.getElementById('content-letters-te'),
-  'letters-hi': document.getElementById('content-letters-hi')
+  'letters-hi': document.getElementById('content-letters-hi'),
+  // NEW:
+  shapes: document.getElementById('content-shapes'),
+  colors: document.getElementById('content-colors'),
+  // include this only if you added a Games section:
+  games: document.getElementById('content-games') || null
 };
 const searchSection = document.getElementById('search-section');
 const searchInput = document.getElementById('search-input');
 
 function toggleSection(tab) {
-  for (const k in contents) {
-    contents[k].style.display = (k === tab ? 'block' : 'none');
-  }
+  Object.entries(contents).forEach(([key, el]) => {
+    if (!el) return; // skip missing sections
+    if (key === tab) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
   if (tab === 'animals') searchSection.classList.remove('hidden');
   else searchSection.classList.add('hidden');
+  // console debug
+  console.log("Switched to tab:", tab);
 }
 
 tabs.forEach(btn => {
@@ -68,7 +107,7 @@ tabs.forEach(btn => {
   });
 });
 
-// ================= ANIMALS =================
+// ------------------ Animals ------------------
 const animalGrid = document.getElementById('animal-grid');
 const animalDetail = document.getElementById('animal-detail');
 const animalImg = document.getElementById('animal-img');
@@ -138,7 +177,7 @@ searchInput.addEventListener('input', () => {
   renderAnimalGrid(list);
 });
 
-// ================= NUMBERS =================
+// ------------------ Numbers ------------------
 const numbersGrid = document.getElementById('numbers-grid');
 const numbersGenerate = document.getElementById('numbers-generate');
 const numStart = document.getElementById('num-start');
@@ -151,7 +190,7 @@ function renderNumbers(start, end) {
   end = Math.min(1000, end);
   for (let i = start; i <= end; i++) {
     const div = document.createElement('div');
-    div.className = 'number-card bg-gradient-to-br from-green-200 to-blue-100 rounded-lg shadow-lg text-center text-xl font-bold flex items-center justify-center p-4 cursor-pointer hover:scale-110 transition-transform';
+    div.className = 'number-card bg-gradient-to-br from-green-200 to-blue-100 rounded-lg shadow-lg text-center text-xl font-bold flex flex-col items-center justify-center p-4 cursor-pointer hover:scale-110 transition-transform';
     div.innerHTML = `<span>${i}</span><p class="text-sm text-gray-700">${numberToWords(i)}</p>`;
     div.addEventListener('click', () => speak(numberToWords(i), 'en-IN'));
     numbersGrid.appendChild(div);
@@ -161,7 +200,7 @@ numbersGenerate.addEventListener('click', () => {
   renderNumbers(parseInt(numStart.value, 10), parseInt(numEnd.value, 10));
 });
 
-// ================= LETTERS =================
+// ------------------ Letters ------------------
 async function renderLetters(path, gridEl, lang) {
   const letters = await loadJSON(path);
   gridEl.innerHTML = '';
@@ -172,7 +211,7 @@ async function renderLetters(path, gridEl, lang) {
     div.addEventListener('click', () => {
       if (l.sound) {
         const audio = new Audio(l.sound);
-        audio.play();
+        audio.play().catch(()=>speak(l.char, lang));
       } else {
         speak(l.char, lang);
       }
@@ -181,44 +220,61 @@ async function renderLetters(path, gridEl, lang) {
   });
 }
 
-// ===============SHAPES================
+// ------------------ Shapes ------------------
 async function renderShapes() {
   const shapes = await loadJSON('data/shapes.json');
   const shapesGrid = document.getElementById('shapes-grid');
+  if (!shapesGrid) {
+    console.warn("No shapes grid found in DOM.");
+    return;
+  }
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
     div.className = 'shape-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
     div.style.backgroundColor = shape.color;
-    div.innerHTML = `<p class="font-bold text-white text-lg">${shape.name}</p>`;
+    const fg = readableTextColor(shape.color);
+    div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${shape.name}</p>`;
     div.addEventListener('click', () => {
-      const audio = new Audio(shape.sound);
-      audio.play();
-      speak(shape.name, 'en-IN');
+      if (shape.sound) {
+        new Audio(shape.sound).play().catch(()=>speak(shape.name,'en-IN'));
+      } else {
+        speak(shape.name, 'en-IN');
+      }
     });
     shapesGrid.appendChild(div);
   });
+  console.log("Rendered shapes:", shapes.length);
 }
 
-// =========COLORS===========
+// ------------------ Colors ------------------
 async function renderColors() {
   const colors = await loadJSON('data/colors.json');
   const colorsGrid = document.getElementById('colors-grid');
+  if (!colorsGrid) {
+    console.warn("No colors grid found in DOM.");
+    return;
+  }
   colorsGrid.innerHTML = '';
   colors.forEach(color => {
     const div = document.createElement('div');
     div.className = 'color-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
     div.style.backgroundColor = color.color;
-    div.innerHTML = `<p class="font-bold text-white text-lg">${color.name}</p>`;
+    const fg = readableTextColor(color.color);
+    div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${color.name}</p>`;
     div.addEventListener('click', () => {
-      const audio = new Audio(color.sound);
-      audio.play();
-      speak(color.name, 'en-IN');
+      if (color.sound) {
+        new Audio(color.sound).play().catch(()=>speak(color.name,'en-IN'));
+      } else {
+        speak(color.name, 'en-IN');
+      }
     });
     colorsGrid.appendChild(div);
   });
+  console.log("Rendered colors:", colors.length);
 }
-// ================= INIT =================
+
+// ------------------ Init ------------------
 async function init() {
   animalsData = await loadJSON('data/animals.json');
   filteredAnimals = animalsData;
@@ -229,9 +285,10 @@ async function init() {
   await renderLetters('data/letters_hindi.json', document.getElementById('letters-hi-grid'), 'hi-IN');
   await renderShapes();
   await renderColors();
+  console.log("Init complete.");
 }
 
 window.addEventListener('load', () => {
-  speechSynthesis.onvoiceschanged = () => { };
+  speechSynthesis.onvoiceschanged = () => {};
   init();
 });
