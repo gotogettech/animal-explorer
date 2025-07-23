@@ -1,17 +1,77 @@
 [
-  { "name": "Circle", "color": "#FF6B6B", "icon": "⬤", "sound": "sounds/circle.mp3" },
-  { "name": "Square", "color": "#4ECDC4", "icon": "⬛", "sound": "sounds/square.mp3" },
-  { "name": "Triangle", "color": "#FFD93D", "icon": "🔺", "sound": "sounds/triangle.mp3" },
-  { "name": "Rectangle", "color": "#6BCB77", "icon": "▭", "sound": "sounds/rectangle.mp3" },
-  { "name": "Star", "color": "#FFB830", "icon": "⭐", "sound": "sounds/star.mp3" },
-  { "name": "Heart", "color": "#FF4C61", "icon": "❤", "sound": "sounds/heart.mp3" },
-  { "name": "Oval", "color": "#9B59B6", "icon": "⬯", "sound": "sounds/oval.mp3" },
-  { "name": "Pentagon","color": "#f472b6", "icon": "assets/images/shapes/pentagon.svg","sound": "sounds/shapes/pentagon.mp3" },
-  { "name": "Hexagon","color": "#f59e0b", "icon": "assets/images/shapes/hexagon.svg","sound": "sounds/shapes/hexagon.mp3" },
-  { "name": "Octagon","color": "#10b981", "icon": "assets/images/shapes/octagon.svg","sound": "sounds/shapes/octagon.mp3" },
-  { "name": "Diamond","color": "#3b82f6", "icon": "assets/images/shapes/diamond.svg","sound": "sounds/shapes/diamond.mp3" },
-  { "name": "Parallelogram", "color": "#ec4899", "icon": "assets/images/shapes/parallelogram.svg", "sound": "sounds/shapes/parallelogram.mp3" },
-  { "name": "Trapezoid","color": "#8b5cf6", "icon": "assets/images/shapes/trapezoid.svg","sound": "sounds/shapes/trapezoid.mp3" },
-  { "name": "Crescent","color": "#14b8a6", "icon": "assets/images/shapes/crescent.svg","sound": "sounds/shapes/crescent.mp3" },
-  { "name": "Arrow","color": "#eab308", "icon": "assets/images/shapes/arrow.svg","sound": "sounds/shapes/arrow.mp3" }
+  {
+    "name": "Circle",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Circle_-_black_simple.svg/1024px-Circle_-_black_simple.svg.png",
+    "color": "#f87171"
+  },
+  {
+    "name": "Square",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Simple_square.svg/1024px-Simple_square.svg.png",
+    "color": "#60a5fa"
+  },
+  {
+    "name": "Rectangle",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Rectangle_example.svg/1024px-Rectangle_example.svg.png",
+    "color": "#fbbf24"
+  },
+  {
+    "name": "Triangle",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Triangle_-_black_simple.svg/1024px-Triangle_-_black_simple.svg.png",
+    "color": "#34d399"
+  },
+  {
+    "name": "Star",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Star_icon-72a7cf.svg/1024px-Star_icon-72a7cf.svg.png",
+    "color": "#f59e0b"
+  },
+  {
+    "name": "Oval",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Ellipse_-_black_simple.svg/1024px-Ellipse_-_black_simple.svg.png",
+    "color": "#a78bfa"
+  },
+  {
+    "name": "Pentagon",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Regular_polygon_5_annotated.svg/1024px-Regular_polygon_5_annotated.svg.png",
+    "color": "#f472b6"
+  },
+  {
+    "name": "Hexagon",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Regular_polygon_6_annotated.svg/1024px-Regular_polygon_6_annotated.svg.png",
+    "color": "#38bdf8"
+  },
+  {
+    "name": "Heptagon",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Regular_polygon_7_annotated.svg/1024px-Regular_polygon_7_annotated.svg.png",
+    "color": "#10b981"
+  },
+  {
+    "name": "Octagon",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Regular_polygon_8_annotated.svg/1024px-Regular_polygon_8_annotated.svg.png",
+    "color": "#f43f5e"
+  },
+  {
+    "name": "Heart",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Fat_hollow_heart_icon.svg/1024px-Fat_hollow_heart_icon.svg.png",
+    "color": "#ec4899"
+  },
+  {
+    "name": "Diamond",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Rhombus.svg/1024px-Rhombus.svg.png",
+    "color": "#06b6d4"
+  },
+  {
+    "name": "Cross",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Plus_icon.svg/1024px-Plus_icon.svg.png",
+    "color": "#f97316"
+  },
+  {
+    "name": "Parallelogram",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Parallelogram_2.svg/1024px-Parallelogram_2.svg.png",
+    "color": "#4ade80"
+  },
+  {
+    "name": "Arrow",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Arrow_right.svg/1024px-Arrow_right.svg.png",
+    "color": "#3b82f6"
+  }
 ]
