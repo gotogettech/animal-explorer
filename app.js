@@ -1,4 +1,4 @@
-// Little Genius Explorer - Modern & Animated (Shapes + Colors Fix + Games)
+// Little Genius Explorer - Final with Games
 
 // ------------------ Utilities ------------------
 async function loadJSON(path) {
@@ -12,31 +12,29 @@ async function loadJSON(path) {
   }
 }
 
+// Number to English words 0-1000
 function numberToWords(num) {
   const ones = ['zero','one','two','three','four','five','six','seven','eight','nine'];
   const teens = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
   const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
   if (num < 10) return ones[num];
-  if (num < 20) return teens[num-10];
+  if (num < 20) return teens[num - 10];
   if (num < 100) {
-    const t = Math.floor(num/10), o = num%10;
-    return tens[t] + (o?'-'+ones[o]:'');
+    const t = Math.floor(num / 10), o = num % 10;
+    return tens[t] + (o ? '-' + ones[o] : '');
   }
   if (num < 1000) {
-    const h = Math.floor(num/100), r = num%100;
-    return r===0 ? ones[h]+' hundred' : ones[h]+' hundred '+numberToWords(r);
+    const h = Math.floor(num / 100), r = num % 100;
+    return r === 0 ? ones[h] + ' hundred' : ones[h] + ' hundred ' + numberToWords(r);
   }
   if (num === 1000) return 'one thousand';
   return String(num);
 }
 
-function speak(text, lang='en-IN') {
+function speak(text, lang = 'en-IN') {
   if (!window.speechSynthesis) { alert('Speech not supported'); return; }
   const utt = new SpeechSynthesisUtterance(text);
   utt.lang = lang;
-  const voices = speechSynthesis.getVoices();
-  const match = voices.find(v=>v.lang===lang) || voices.find(v=>v.lang.startsWith(lang.split('-')[0])) || voices[0];
-  if (match) utt.voice = match;
   speechSynthesis.speak(utt);
 }
 
@@ -72,8 +70,9 @@ const contents = {
   'letters-hi': document.getElementById('content-letters-hi'),
   shapes: document.getElementById('content-shapes'),
   colors: document.getElementById('content-colors'),
-  games: document.getElementById('content-games') || null
+  games: document.getElementById('content-games')
 };
+
 const searchSection = document.getElementById('search-section');
 const searchInput = document.getElementById('search-input');
 
@@ -108,7 +107,7 @@ function renderAnimalGrid(list) {
   animalGrid.innerHTML = '';
   list.forEach(an => {
     const card = document.createElement('div');
-    card.className = 'animal-card bg-gradient-to-br from-pink-200 to-yellow-100 rounded-xl p-2 shadow-lg hover:scale-110 transition-transform cursor-pointer';
+    card.className = 'animal-card bg-gradient-to-br from-pink-200 to-yellow-100 rounded-xl p-2 shadow-lg hover:scale-110 cursor-pointer';
     card.innerHTML = `
       <img src="${an.image}" alt="${an.name}" class="rounded-xl w-full h-32 object-contain" />
       <p class="text-center text-lg font-bold mt-2">${an.name}</p>
@@ -157,7 +156,8 @@ catButtons.forEach(btn => {
 
 searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim().toLowerCase();
-  renderAnimalGrid(filteredAnimals.filter(a => a.name.toLowerCase().includes(q)));
+  const list = filteredAnimals.filter(a => a.name.toLowerCase().includes(q));
+  renderAnimalGrid(list);
 });
 
 // ------------------ Numbers ------------------
@@ -173,7 +173,7 @@ function renderNumbers(start, end) {
   end = Math.min(1000, end);
   for (let i = start; i <= end; i++) {
     const div = document.createElement('div');
-    div.className = 'number-card bg-gradient-to-br from-green-200 to-blue-100 rounded-lg shadow-lg text-center text-xl font-bold flex flex-col items-center justify-center p-4 cursor-pointer hover:scale-110 transition-transform';
+    div.className = 'number-card bg-gradient-to-br from-green-200 to-blue-100 rounded-lg shadow-lg text-center text-xl font-bold flex flex-col items-center justify-center p-4 hover:scale-110 cursor-pointer';
     div.innerHTML = `<span>${i}</span><p class="text-sm text-gray-700">${numberToWords(i)}</p>`;
     div.addEventListener('click', () => speak(numberToWords(i), 'en-IN'));
     numbersGrid.appendChild(div);
@@ -189,7 +189,7 @@ async function renderLetters(path, gridEl, lang) {
   gridEl.innerHTML = '';
   letters.forEach(l => {
     const div = document.createElement('div');
-    div.className = 'letter-card bg-gradient-to-br from-yellow-200 to-pink-100 rounded-lg shadow-md text-3xl font-bold p-4 text-center cursor-pointer hover:scale-110 transition-transform';
+    div.className = 'letter-card bg-gradient-to-br from-yellow-200 to-pink-100 rounded-lg shadow-md text-3xl font-bold p-4 text-center cursor-pointer hover:scale-110';
     div.textContent = l.char;
     div.addEventListener('click', () => {
       if (l.sound) new Audio(l.sound).play().catch(()=>speak(l.char, lang));
@@ -203,15 +203,11 @@ async function renderLetters(path, gridEl, lang) {
 async function renderShapes() {
   const shapes = await loadJSON('data/shapes.json');
   const shapesGrid = document.getElementById('shapes-grid');
-  if (!shapesGrid) return;
   shapesGrid.innerHTML = '';
   shapes.forEach(shape => {
     const div = document.createElement('div');
-    div.className = 'shape-card p-4 rounded-lg shadow-lg text-center cursor-pointer hover:scale-110 transition-transform bg-white';
-    div.innerHTML = `
-      <img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2" />
-      <p class="font-bold text-lg text-gray-800">${shape.name}</p>
-    `;
+    div.className = 'shape-card p-4 rounded-lg shadow-lg text-center hover:scale-110 cursor-pointer bg-white';
+    div.innerHTML = `<img src="${shape.icon}" alt="${shape.name}" class="w-16 h-16 mx-auto mb-2"/><p class="font-bold text-lg text-gray-800">${shape.name}</p>`;
     div.addEventListener('click', () => speak(shape.name, 'en-IN'));
     shapesGrid.appendChild(div);
   });
@@ -221,167 +217,106 @@ async function renderShapes() {
 async function renderColors() {
   const colors = await loadJSON('data/colors.json');
   const colorsGrid = document.getElementById('colors-grid');
-  if (!colorsGrid) return;
   colorsGrid.innerHTML = '';
   colors.forEach(color => {
     const div = document.createElement('div');
-    div.className = 'color-card p-6 rounded-lg shadow-lg text-center cursor-pointer transform transition hover:scale-110';
+    div.className = 'color-card p-6 rounded-lg shadow-lg text-center hover:scale-110 cursor-pointer';
     div.style.backgroundColor = color.color;
     const fg = readableTextColor(color.color);
     div.innerHTML = `<p class="font-bold text-lg" style="color:${fg}">${color.name}</p>`;
-    div.addEventListener('click', () => {
-      if (color.sound) new Audio(color.sound).play().catch(()=>speak(color.name,'en-IN'));
-      else speak(color.name, 'en-IN');
-    });
+    div.addEventListener('click', () => speak(color.name, 'en-IN'));
     colorsGrid.appendChild(div);
   });
 }
 
 // ------------------ Games ------------------
-const gameButtons = document.querySelectorAll(".game-btn");
-const gameArea = document.getElementById("game-area");
-const gameContent = document.getElementById("game-content");
-const backToMenu = document.getElementById("back-to-menu");
+const gamesMenu = document.querySelectorAll('.game-btn');
+const gameArea = document.getElementById('game-area');
+const gameContent = document.getElementById('game-content');
+const backToMenuBtn = document.getElementById('back-to-menu');
 
-gameButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelector(".games-menu").classList.add("hidden");
-    gameArea.classList.remove("hidden");
-    const game = btn.dataset.game;
-    startGame(game);
+gamesMenu.forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelector('.games-menu').classList.add('hidden');
+    gameArea.classList.remove('hidden');
+    const gameType = btn.dataset.game;
+    if (gameType === 'shape-match') startShapeMatchGame();
+    if (gameType === 'color-memory') startColorMemoryGame();
+    if (gameType === 'number-quiz') startNumberQuiz();
   });
 });
 
-backToMenu.addEventListener("click", () => {
-  gameContent.innerHTML = "";
-  gameArea.classList.add("hidden");
-  document.querySelector(".games-menu").classList.remove("hidden");
+backToMenuBtn.addEventListener('click', () => {
+  gameArea.classList.add('hidden');
+  document.querySelector('.games-menu').classList.remove('hidden');
+  gameContent.innerHTML = '';
 });
 
-// Start specific game
-function startGame(game) {
-  gameContent.innerHTML = ""; 
-  if (game === "shape-match") startShapeMatching();
-  else if (game === "color-memory") startColorMemory();
-  else if (game === "number-quiz") startNumberQuiz();
-}
-
-// ---------- Game 1: Shape Matching ----------
-function startShapeMatching() {
-  const shapes = ["circle", "square", "triangle", "star", "heart"];
-  const cards = [...shapes, ...shapes].sort(() => Math.random() - 0.5);
-  let selected = [];
-  let matched = [];
-
-  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Shape Matching Game</h3>
-    <div id="shape-grid" class="grid grid-cols-3 gap-4"></div>`;
-
-  const grid = document.getElementById("shape-grid");
-  cards.forEach(shape => {
-    const div = document.createElement("div");
-    div.className = "bg-gray-200 p-6 rounded cursor-pointer text-center font-bold text-lg";
-    div.textContent = "?";
-    div.dataset.shape = shape;
-    div.addEventListener("click", () => {
-      if (selected.length < 2 && !div.classList.contains("matched")) {
-        div.textContent = shape;
-        selected.push(div);
-        if (selected.length === 2) {
-          setTimeout(() => checkMatch(), 800);
-        }
-      }
-    });
-    grid.appendChild(div);
-  });
-
-  function checkMatch() {
-    if (selected[0].dataset.shape === selected[1].dataset.shape) {
-      selected.forEach(el => {
-        el.classList.add("matched", "bg-green-300");
+// --- Shape Matching Game ---
+function startShapeMatchGame() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Shape Matching Game</h3>`;
+  loadJSON('data/shapes.json').then(shapes => {
+    const shape = shapes[Math.floor(Math.random()*shapes.length)];
+    gameContent.innerHTML += `<p class="mb-2">Find this shape: <strong>${shape.name}</strong></p>`;
+    const options = shapes.sort(() => 0.5 - Math.random()).slice(0, 4);
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'grid grid-cols-2 gap-4';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'bg-white p-4 shadow rounded hover:bg-gray-200';
+      btn.innerHTML = `<img src="${opt.icon}" class="w-12 h-12 mx-auto mb-2"/><span>${opt.name}</span>`;
+      btn.addEventListener('click', () => {
+        if (opt.name === shape.name) alert('Correct!');
+        else alert('Try Again!');
       });
-      matched.push(selected[0].dataset.shape);
-    } else {
-      selected.forEach(el => (el.textContent = "?"));
-    }
-    selected = [];
-    if (matched.length === shapes.length) {
-      alert("🎉 You matched all shapes!");
-    }
-  }
-}
-
-// ---------- Game 2: Color Memory ----------
-function startColorMemory() {
-  const colors = ["red", "blue", "green", "yellow", "purple"];
-  const cards = [...colors, ...colors].sort(() => Math.random() - 0.5);
-  let selected = [];
-
-  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Color Memory Game</h3>
-    <div id="color-grid" class="grid grid-cols-3 gap-4"></div>`;
-
-  const grid = document.getElementById("color-grid");
-  cards.forEach(color => {
-    const div = document.createElement("div");
-    div.className = "bg-gray-300 h-20 rounded cursor-pointer";
-    div.dataset.color = color;
-    div.addEventListener("click", () => flipColor(div));
-    grid.appendChild(div);
-  });
-
-  function flipColor(div) {
-    if (selected.length < 2 && !div.classList.contains("matched")) {
-      div.style.backgroundColor = div.dataset.color;
-      selected.push(div);
-      if (selected.length === 2) {
-        setTimeout(checkColorMatch, 800);
-      }
-    }
-  }
-
-  function checkColorMatch() {
-    if (selected[0].dataset.color === selected[1].dataset.color) {
-      selected.forEach(el => el.classList.add("matched"));
-    } else {
-      selected.forEach(el => (el.style.backgroundColor = "gray"));
-    }
-    selected = [];
-  }
-}
-
-// ---------- Game 3: Number Quiz ----------
-function startNumberQuiz() {
-  let score = 0;
-  let question = 1;
-
-  function generateQuestion() {
-    const a = Math.floor(Math.random() * 10) + 1;
-    const b = Math.floor(Math.random() * 10) + 1;
-    const correct = a + b;
-
-    gameContent.innerHTML = `
-      <h3 class="text-xl font-bold mb-4">Number Quiz</h3>
-      <p class="mb-2">Question ${question}: What is ${a} + ${b}?</p>
-      <input type="number" id="answer" class="border p-2 rounded w-24"/>
-      <button id="submit-answer" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Submit</button>
-      <p class="mt-4">Score: ${score}</p>
-    `;
-
-    document.getElementById("submit-answer").addEventListener("click", () => {
-      const userAns = parseInt(document.getElementById("answer").value, 10);
-      if (userAns === correct) {
-        score++;
-        alert("Correct!");
-      } else {
-        alert("Oops! The answer was " + correct);
-      }
-      question++;
-      generateQuestion();
+      optionsDiv.appendChild(btn);
     });
-  }
-
-  generateQuestion();
+    gameContent.appendChild(optionsDiv);
+  });
 }
 
+// --- Color Memory Game ---
+function startColorMemoryGame() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Color Memory Game</h3>`;
+  loadJSON('data/colors.json').then(colors => {
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    gameContent.innerHTML += `<p class="mb-2">Find the color: <strong>${color.name}</strong></p>`;
+    const options = colors.sort(() => 0.5 - Math.random()).slice(0, 4);
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'grid grid-cols-2 gap-4';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'p-4 rounded shadow';
+      btn.style.backgroundColor = opt.color;
+      btn.addEventListener('click', () => {
+        if (opt.name === color.name) alert('Correct!');
+        else alert('Try Again!');
+      });
+      optionsDiv.appendChild(btn);
+    });
+    gameContent.appendChild(optionsDiv);
+  });
+}
+
+// --- Number Quiz Game ---
+function startNumberQuiz() {
+  gameContent.innerHTML = `<h3 class="text-xl font-bold mb-4">Number Quiz</h3>`;
+  const num = Math.floor(Math.random()*50)+1;
+  gameContent.innerHTML += `<p class="mb-2">What number is this: <strong>${numberToWords(num)}</strong>?</p>`;
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'grid grid-cols-2 gap-4';
+  [num, num+1, num+2, num-1].sort(() => 0.5 - Math.random()).forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white p-4 shadow rounded hover:bg-gray-200';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => {
+      if (opt === num) alert('Correct!');
+      else alert('Wrong! The answer was ' + num);
+    });
+    optionsDiv.appendChild(btn);
+  });
+  gameContent.appendChild(optionsDiv);
+}
 
 // ------------------ Init ------------------
 async function init() {
@@ -396,7 +331,4 @@ async function init() {
   await renderColors();
 }
 
-window.addEventListener('load', () => {
-  speechSynthesis.onvoiceschanged = () => {};
-  init();
-});
+window.addEventListener('load', init);
