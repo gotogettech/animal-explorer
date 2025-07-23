@@ -21,32 +21,32 @@
 
   <!-- Navigation Tabs -->
   <nav id="tabs" class="flex flex-wrap justify-center gap-4 p-4 bg-gradient-to-r from-blue-100 to-pink-100 rounded-b-xl">
-    <button class="tab-btn active bg-blue-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="animals">Animals</button>
-    <button class="tab-btn bg-green-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="numbers">Numbers</button>
-    <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="letters-en">English Letters</button>
-    <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="letters-te">Telugu Letters</button>
-    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="letters-hi">Hindi Letters</button>
-    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="shapes">Shapes</button>
-    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="colors">Colors</button>
-    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105" data-tab="games">Games</button>
+    <button class="tab-btn active bg-blue-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="animals">Animals</button>
+    <button class="tab-btn bg-green-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="numbers">Numbers</button>
+    <button class="tab-btn bg-purple-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-en">English Letters</button>
+    <button class="tab-btn bg-pink-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-te">Telugu Letters</button>
+    <button class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="letters-hi">Hindi Letters</button>
+    <button class="tab-btn bg-indigo-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="shapes">Shapes</button>
+    <button class="tab-btn bg-teal-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="colors">Colors</button>
+    <button class="tab-btn bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform" data-tab="games">Games</button>
   </nav>
 
   <main class="p-6">
-    <!-- Search bar -->
+    <!-- Search bar (Animals only) -->
     <div id="search-section" class="mb-4">
       <input type="text" id="search-input" placeholder="Search animals..."
         class="p-3 border border-gray-300 rounded w-full shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
     </div>
 
-    <!-- Animal Content -->
+    <!-- Animals -->
     <div id="content-animals" class="active">
       <div id="animal-category-filters" class="flex flex-wrap gap-2 mb-4">
-        <button class="cat-button active bg-blue-400 text-white px-3 py-1 rounded shadow" data-cat="All">All</button>
-        <button class="cat-button bg-pink-400 text-white px-3 py-1 rounded shadow" data-cat="Mammal">Mammals</button>
-        <button class="cat-button bg-yellow-400 text-white px-3 py-1 rounded shadow" data-cat="Bird">Birds</button>
-        <button class="cat-button bg-green-400 text-white px-3 py-1 rounded shadow" data-cat="Reptile">Reptiles</button>
-        <button class="cat-button bg-purple-400 text-white px-3 py-1 rounded shadow" data-cat="Aquatic">Aquatic</button>
-        <button class="cat-button bg-red-400 text-white px-3 py-1 rounded shadow" data-cat="Amphibian">Amphibians</button>
+        <button class="cat-button active bg-blue-400 text-white px-3 py-1 rounded shadow hover:bg-blue-500" data-cat="All">All</button>
+        <button class="cat-button bg-pink-400 text-white px-3 py-1 rounded shadow hover:bg-pink-500" data-cat="Mammal">Mammals</button>
+        <button class="cat-button bg-yellow-400 text-white px-3 py-1 rounded shadow hover:bg-yellow-500" data-cat="Bird">Birds</button>
+        <button class="cat-button bg-green-400 text-white px-3 py-1 rounded shadow hover:bg-green-500" data-cat="Reptile">Reptiles</button>
+        <button class="cat-button bg-purple-400 text-white px-3 py-1 rounded shadow hover:bg-purple-500" data-cat="Aquatic">Aquatic</button>
+        <button class="cat-button bg-red-400 text-white px-3 py-1 rounded shadow hover:bg-red-500" data-cat="Amphibian">Amphibians</button>
       </div>
       <div id="animal-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
 
@@ -55,19 +55,19 @@
         <h2 id="animal-name" class="text-2xl font-bold mt-4 text-blue-600"></h2>
         <p id="animal-fact" class="text-gray-700 mt-2"></p>
         <div class="mt-4 flex justify-center gap-4">
-          <button id="animal-sound-btn" class="btn bg-green-500 text-white px-4 py-2 rounded">Play Sound</button>
-          <button id="animal-speak-btn" class="btn bg-blue-500 text-white px-4 py-2 rounded">Speak</button>
+          <button id="animal-sound-btn" class="btn bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Play Sound</button>
+          <button id="animal-speak-btn" class="btn bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Speak</button>
         </div>
-        <button id="animal-back" class="mt-6 bg-gray-400 text-white px-4 py-2 rounded">Back</button>
+        <button id="animal-back" class="mt-6 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Back</button>
       </div>
     </div>
 
-    <!-- Numbers Content -->
+    <!-- Numbers -->
     <div id="content-numbers" class="hidden">
       <div class="number-controls mb-4 flex gap-2 items-center justify-center">
         <input type="number" id="num-start" value="0" min="0" max="1000" class="p-2 border rounded w-20" />
         <input type="number" id="num-end" value="20" min="0" max="1000" class="p-2 border rounded w-20" />
-        <button id="numbers-generate" class="bg-blue-500 text-white px-4 py-2 rounded">Show Numbers</button>
+        <button id="numbers-generate" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Show Numbers</button>
       </div>
       <div id="numbers-grid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-10 gap-4 p-4"></div>
     </div>
@@ -103,17 +103,59 @@
     <!-- Games -->
     <div id="content-games" class="hidden">
       <h2 class="text-2xl font-bold text-center mb-4 text-red-600">Fun Games</h2>
-      <div class="games-menu grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <button class="game-btn bg-blue-400 text-white rounded-lg p-6 shadow" data-game="shape-match">Shape Matching</button>
-        <button class="game-btn bg-green-400 text-white rounded-lg p-6 shadow" data-game="color-memory">Color Memory</button>
-        <button class="game-btn bg-yellow-400 text-white rounded-lg p-6 shadow" data-game="number-quiz">Number Quiz</button>
+      <div class="games-menu grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="game-btn bg-blue-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="shape-match">Shape Matching</button>
+        <button class="game-btn bg-green-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="color-memory">Color Memory</button>
+        <button class="game-btn bg-yellow-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="number-quiz">Number Quiz</button>
+        <button class="game-btn bg-purple-400 text-white rounded-lg p-6 shadow hover:scale-105" data-game="mega-quiz">Mega Quiz (All)</button>
       </div>
+
+      <!-- Game Area -->
       <div id="game-area" class="mt-6 hidden p-4 bg-white rounded-xl shadow-lg">
-        <button id="back-to-menu" class="bg-gray-500 text-white px-4 py-2 rounded">Back to Menu</button>
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+          <button id="back-to-menu" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Back to Menu</button>
+          <div class="text-center flex-1">
+            <p class="font-bold text-gray-700">Player: <span id="game-player-name">---</span></p>
+            <p class="font-bold text-gray-700">Question: <span id="game-question-num">0</span>/<span id="game-question-total">0</span></p>
+            <p class="font-bold text-gray-700">Score: <span id="game-score">0</span></p>
+          </div>
+          <div class="w-20 text-right">
+            <p class="font-bold text-gray-700">Time:</p>
+            <p class="font-bold text-gray-700"><span id="game-timer">0</span>s</p>
+          </div>
+        </div>
         <div id="game-content" class="mt-4"></div>
       </div>
     </div>
   </main>
+
+  <!-- Player Name Modal -->
+  <div id="player-name-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-20">
+    <div class="bg-white p-6 rounded-xl w-full max-w-sm text-center shadow-2xl">
+      <h3 class="text-xl font-bold mb-2">Enter Your Name</h3>
+      <input id="player-name-input" type="text" class="w-full border p-2 rounded mb-4" placeholder="Your name" />
+      <div class="flex gap-2 justify-center">
+        <button id="player-name-cancel" class="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
+        <button id="player-name-save" class="bg-green-500 text-white px-4 py-2 rounded">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate Page -->
+  <div id="certificate-page" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-30">
+    <div class="w-full max-w-md bg-white rounded-xl p-6 text-center shadow-2xl">
+      <h3 class="text-3xl font-extrabold mb-2 text-blue-600">Certificate of Achievement</h3>
+      <p class="mb-2">This certifies that</p>
+      <p id="cert-name" class="text-2xl font-bold text-pink-600 mb-4"></p>
+      <p class="mb-2">scored</p>
+      <p id="cert-score" class="text-2xl font-bold text-green-600 mb-4"></p>
+      <p id="cert-date" class="text-sm text-gray-500 mb-6"></p>
+      <div class="flex gap-2 justify-center">
+        <button id="cert-print" class="bg-blue-500 text-white px-4 py-2 rounded">Print / Save</button>
+        <button id="cert-close" class="bg-gray-500 text-white px-4 py-2 rounded">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
