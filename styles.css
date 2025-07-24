@@ -209,7 +209,6 @@ button:hover {
   box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
   outline: none;
 }
-
 /* Animations */
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(10px); }
